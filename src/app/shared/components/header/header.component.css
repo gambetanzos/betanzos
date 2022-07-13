@@ -1,0 +1,52 @@
+.card-img-overlay{
+    background-color: rgba(79,185,168,.5);
+    width: 40%;
+    height: 30%;
+    position: absolute;
+    top: 10%;
+    left: 55%;
+    border-radius: 8px;
+  }
+  .card-al{
+    padding: 20px !important;
+    justify-content: center;
+    background-color: rgba(40, 199, 106, 0.5) !important;
+  }
+  .card-alc{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    border: 5px solid white;
+    max-height: 480px;
+    max-width: 480px;
+  
+  }
+  .logo img {
+    width: 150px;
+  }
+  
+  
+
+  #menu{
+    justify-content: center;
+    width: 70%;
+
+    font-size: 20px;
+  }
+  
+  
+  
+  
+  #menu a{
+    text-decoration: none;
+    color: #444;
+    transition: 300ms all;
+  }
+  
+  #menu a:hover,
+  .active{
+    color: rgb(7, 138, 226)!important;
+  }
+header{
+  background-color: rgba(10, 190, 235, 0.5);
+}
