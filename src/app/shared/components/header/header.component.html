@@ -1,9 +1,9 @@
 <header id="header" class="fixed-top p-0">
-    <div class="center">      
+    <div class="center">
         <!--MENU-->
         <nav id="menu"class="navbar navbar-expand-lg navbar-light">
             <!--LOGO-->
-          <div class="logo ml-0">
+          <div class="logo">
             <img src="./assets/img/logogambb.png" class = "app-logo" alt="Logotipo"/>
           </div>
           <div class="container-fluid ">
@@ -11,66 +11,48 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-              <ul class="navbar-nav me-auto mb-2 ml-5 mb-lg-0">
+              <ul class="navbar-nav me-auto  ml-5 mb-lg-0">
                 <li class="nav-item">
-                  <a  class="nav-link active" aria-current="page">INICIO</a>
+                  <a  class="nav-link active" aria-current="page" href="/home">INICIO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">MUNICIPIO</a>
+                    <a class="nav-link" aria-current="page" href="/work">MUNICIPIO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">NOTICIAS</a>
+                    <a class="nav-link" aria-current="page" href="/work">NOTICIAS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">CONCEJO</a>
+                    <a class="nav-link" aria-current="page" href="/work">CONCEJO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">GACETA</a>
+                    <a class="nav-link" aria-current="page" href="/work">TRANSPARENCIA</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     OFICINA VIRTUAL
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">HOJA DE RUTA</a></li>
-                    <li><a class="dropdown-item" href="#">ARCHIVOS</a></li>
+                    <li><a  class="dropdown-item" href="/hoja-ruta">HOJA DE RUTA</a></li>
+                    <li><a class="dropdown-item" href="/work">ALMACENES</a></li>
+                    <li><a class="dropdown-item" href="/work">ARCHIVOS</a></li>
+                    <li><a class="dropdown-item" href="/work">CEMENTERIO</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">ALMACENES</a></li>
+                    <li><a class="dropdown-item" href="/work">RR.HH.</a></li>
+                    <li><a class="dropdown-item" href="/work">CONVENIOS</a></li>
+                    <li><a class="dropdown-item" href="/work">INVERSION PUBLICA</a></li>
+                    <li><a class="dropdown-item" href="/work">CORRESPONDENCIA</a></li>
+                    <li><a class="dropdown-item" href="/work">CITES</a></li>
                   </ul>
                 </li>
               </ul>
               <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search">
+                <button class="btn btn-outline-primary fa" type="submit">&#xf002;</button>
               </form>
             </div>
           </div>
         </nav>
         <!--LIMPIAR FLOTADOS-->
         <div class="clearfix"></div>
-    </div>  
-</header>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
     </div>
-  </div>
-</div>
+</header>

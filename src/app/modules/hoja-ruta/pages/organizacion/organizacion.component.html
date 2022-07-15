@@ -1,0 +1,41 @@
+
+<div class="container mt-5">
+  <div class="row">
+          <div class="card">
+              <div class="card-body text-center">
+                  <span class="titulo">LISTADO DE ORGS </span>
+                  <button class="btn btn-success float-end" routerLink="/hoja-ruta/organizacion-add">NUEVO</button>
+                  <table *ngIf="orgs.length > 0" class="table table-striped mt-3">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Nombre Cargo</th>
+                          <th scope="col">Agregar Sub</th>
+                          <th scope="col">Ver Sub</th>
+                          <th scope="col">Aciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let org of orgs">
+                          <td>{{ org.nombredir }}</td>
+                          <td>{{ org.nombrecargo }}</td>
+                          <td>
+                            <i [routerLink]="['/hoja-ruta/subdir-add',  org._id ]" class="fas fa-folder-plus text-primary"></i>
+                        </td>
+                        <td>
+                          <i [routerLink]="['/hoja-ruta/subdir',  org.nombredir]" class="fas fa-align-justify text-primary"></i>
+                      </td>
+                          <td>
+                              <i [routerLink]="['/hoja-ruta/organizacion-add', org._id]" class="fas fa-edit text-primary"></i>
+                              <i (click)="eliminarOrg(org._id)" class="fas fa-trash text-danger"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="orgs.length == 0">No hay usuarios para mostrar</h5>
+              </div>
+
+      </div>
+  </div>
+</div>
+

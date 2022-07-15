@@ -1,0 +1,36 @@
+
+<div class="container mt-5">
+  <div class="row">
+      <div class="card">
+          <div class="card">
+              <div class="card-body text-center">
+                  <span class="titulo"> {{ titulo | uppercase }} </span>
+                  <button class="btn btn-success float-end" routerLink="/hoja-ruta/organizacion">VOLVER</button>
+                  <table *ngIf="subdir.length > 0" class="table table-striped mt-3">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Nombre Sub Dir</th>
+                          <th scope="col">Nombre Sub cargo</th>
+                          <th scope="col">Aciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let org of subdir">
+                          <td>{{ org.nombredir }}</td>
+                          <td>{{ org.nombresubdir }}</td>
+                          <td>{{ org.nombrecargosubdir }}</td>
+                          <td>
+                              <i [routerLink]="['/organizacion-add', org._id]" class="fas fa-edit text-primary"></i>
+                              <i (click)="eliminarUser(org._id)" class="fas fa-trash text-danger"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="subdir.length == 0">No hay usuarios para mostrar</h5>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+

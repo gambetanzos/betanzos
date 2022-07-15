@@ -1,0 +1,47 @@
+
+<div class="container mt-5">
+  <div class="row" >
+    <div class="alert alert-danger" role="alert" *ngIf="identity.roles!='SUPER_ADMIN'">
+      Usted... no tiene privilegios para navegar en este sitio!
+     </div>
+          <div class="card">
+              <div class="card-body text-center">
+                  <span class="titulo">LISTADO DE USUARIOS </span>
+                  <button class="btn btn-success float-end" routerLink="/hoja-ruta/usuarioAdd">NUEVO</button>
+                  <table *ngIf="users.length > 0" class="table table-striped mt-3">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Apellidos</th>
+                          <th scope="col">C.I.</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Telefono</th>
+                          <th scope="col">Fecha de Nacimiento</th>
+                          <th scope="col">Cargo</th>
+                          <th scope="col">Roles</th>
+                          <th scope="col">Aciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let user of users">
+                          <td>{{ user.username }}</td>
+                          <td>{{ user.surnames }}</td>
+                          <td>{{ user.ci }}</td>
+                          <td>{{ user.email }}</td>
+                          <td>{{ user.numberphone }}</td>
+                          <td>{{ user.birthdate  | date:'dd/MM/yyyy' }}</td>
+                          <td>{{ user.post }}</td>
+                          <td>{{ user.roles }}</td>
+                          <td>
+                              <i [routerLink]="['/hoja-ruta/usuarioAdd', user._id]" class="fas fa-edit text-primary"></i>
+                              <i (click)="eliminarUser(user._id)" class="fas fa-trash text-danger"></i>
+                              <i [routerLink]="['/hoja-ruta/roles', user._id]" class="fas fa-user-lock text-primary"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="users.length == 0">No hay usuarios para mostrar</h5>
+              </div>
+          </div>
+  </div>
+</div>
