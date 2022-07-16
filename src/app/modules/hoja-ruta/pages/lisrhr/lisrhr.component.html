@@ -39,9 +39,9 @@
 
                           <td>{{ hoja.referencia }}</td>
                           <td (click)="cambiarestado(hoja._id)" [ngSwitch]="hoja.estado" >
-                            <span *ngSwitchCase="'REGISTRADO'" class="badge est badge-danger" style="color:rgb(229, 59, 59) !important">{{ hoja.estado }}</span>
-                            <span *ngSwitchCase="'RECIBIDO'" class="badge est badge-success" style="color:rgb(17, 174, 88) !important">{{ hoja.estado }}</span>
-                            <span *ngSwitchCase="'ENVIADO'" class="badge est badge-info" style="color:rgb(70, 203, 237) !important">{{ hoja.estado }}</span>
+                            <span *ngSwitchCase="'REGISTRADO'" class="badge est badge-danger" >{{ hoja.estado }}</span>
+                            <span *ngSwitchCase="'RECIBIDO'" class="badge est badge-success" >{{ hoja.estado }}</span>
+                            <span *ngSwitchCase="'ENVIADO'" class="badge est badge-info" >{{ hoja.estado }}</span>
                           </td>
                           <td [ngSwitch]="hoja.estado" *ngIf="identity.roles==='ADMIN' || identity.roles==='SUPER_USER' || identity.roles==='USER'">
                               <span *ngSwitchCase="'REGISTRADO'" class="badge  badge-danger">{{ hoja.estado }}</span>

@@ -1,1 +1,77 @@
-<p>search works!</p>
+
+<div class="container mt-5">
+  <div class="row">
+          <div class="card">
+              <div class="card-body text-center">
+                  <span class="titulo">LISTA DE HOJAS DE RUTA </span>
+
+                  <table *ngIf="hojas.length > 0" class="table table-striped mt-3">
+                      <thead>
+                        <tr>
+                          <th  scope="col" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">Enviar</th>
+                          <th scope="col">NUIT</th>
+                          <th scope="col">Fecha de Resepcion</th>
+                          <th scope="col">HORA</th>
+                          <th scope="col">Fecha de Documento</th>
+                          <th scope="col">Origen</th>
+                          <th scope="col">Tipo de Documento</th>
+                          <th scope="col">Referencia</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Seguimiento</th>
+                          <th scope="col">Adjunto</th>
+                          <th scope="col"  *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">Acciones</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr [ngClass]= "hoja.estado === 'ENVIADO' ? 'table-success' : 'table-light' "  *ngFor="let hoja of hojas">
+                          <td *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">
+                            <i [routerLink]="['/hoja-ruta/seguimiento-add',  hoja._id,] " class="fas fa-space-shuttle text-primary " *ngIf="hoja.estado === 'RECIBIDO'" ></i>
+                            <i [routerLink]="null " class="fas fa-space-shuttle text-primary" style="color:rgb(171, 178, 241) !important" *ngIf="hoja.estado === 'ENVIADO'"  ></i>
+                        </td>
+                          <td>{{ hoja.nuit }}</td>
+                          <td>{{ hoja.fecharesepcion | date:'dd/MM/yyyy'}}</td>
+                          <td>{{ hoja.fecharesepcion | date:'HH:MM:ss'}}</td>
+                          <td>{{ hoja.fechadocumento | date:'dd/MM/yyyy'}}</td>
+                          <td>{{ hoja.origen }}</td>
+                          <td>{{ hoja.tipodoc }}</td>
+                          <td>{{ hoja.referencia }}</td>
+                          <td >
+                            <div *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'" (click)="cambiarestado(hoja._id)" [ngSwitch]="hoja.estado">
+                              <span *ngSwitchCase="'REGISTRADO'" class="badge est badge-danger">{{ hoja.estado }}</span>
+                              <span *ngSwitchCase="'RECIBIDO'" class="badge  est badge-success">{{ hoja.estado }}</span>
+                              <span *ngSwitchCase="'ENVIADO'" class="badge est badge-info">{{ hoja.estado }}</span>
+                            </div>
+                            <div *ngIf="identity==null" [ngSwitch]="hoja.estado">
+                              <span *ngSwitchCase="'REGISTRADO'" class="badge badge-danger">{{ hoja.estado }}</span>
+                              <span *ngSwitchCase="'RECIBIDO'" class="badge badge-success">{{ hoja.estado }}</span>
+                              <span *ngSwitchCase="'ENVIADO'" class="badge badge-info">{{ hoja.estado }}</span>
+                            </div>
+                            </td>
+
+                        <td>
+                          <i [routerLink]="['/hoja-ruta/seguimiento',  hoja._id ]" class="fas fa-align-justify text-primary"></i>
+                          <i  [routerLink]="['/hoja-ruta/list-asociar', hoja._id]" *ngIf="hoja.asociado.length>0" class="fas fa-paperclip text-primary"></i>
+                      </td>
+                      <td>
+                        <i [routerLink]="['/hoja-ruta/list-files',  hoja._id ]"class="fas fa-cloud-download-alt" style="color:rgb(29, 14, 248) !important"></i>
+                    </td>
+                    <td *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">
+                      <i [routerLink]="['/hoja-ruta/hoja-add', hoja._id]" class="fas fa-edit text-primary" *ngIf="hoja.estado === 'REGISTRADO'"  ></i>
+                      <i [routerLink]="null" class="fas fa-edit text-primary" style="color:rgb(124, 150, 235) !important" *ngIf="hoja.estado === 'ENVIADO'" ></i>
+                      <i [routerLink]="null" class="fas fa-edit text-primary"style="color:rgb(124, 150, 235) !important" *ngIf="hoja.estado === 'RECIBIDO'" ></i>
+
+                      <i (click)="eliminarHoja(hoja._id)" class="fas fa-trash text-danger" *ngIf="hoja.estado === 'REGISTRADO'"></i>
+                      <i  class="fas fa-trash text-danger" style="color:rgb(216, 139, 103) !important" *ngIf="hoja.estado === 'ENVIADO'"></i>
+                      <i  class="fas fa-trash text-danger" style="color:rgb(250, 146, 98) !important" *ngIf="hoja.estado === 'RECIBIDO'"></i>
+                      <i [routerLink]="['/hoja-ruta/asociar',  hoja.nuit ]"  class="fas fa-paste text-primary " *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'"></i>
+                  </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="hojas.length == 0">No se pudo encontrar lo q buscas</h5>
+              </div>
+          </div>
+  </div>
+</div>

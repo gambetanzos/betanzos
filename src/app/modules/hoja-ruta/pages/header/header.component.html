@@ -6,12 +6,47 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search">
-              <button class="btn btn-outline-primary fa" type="submit">&#xf002;</button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <form #searchForm= "ngForm" (ngSubmit)="goSearch()" class="d-flex">
+              <input name="search"[(ngModel)]="searchString" class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search">
+              <button class="btn btn-outline-primary fa" type="submit" value="Buscar">&#xf002;</button>
             </form>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <ul class=" d-flex nabar-nav nabar-right mt-3" *ngIf="!_authService.loggedIn()">
+              <li class="nav-item activate">
+                <a class="nav-link " [routerLink]="['/hoja-ruta/login']"> LOGIN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/work']"> REGISTRO </a>
+              </li>
+            </ul>
+            <ul class="row m-0 align-items-center" *ngIf="identity && identity.email">
+              <li  class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle fs-6" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false ">
+                  <img src="./assets/img/user.png" alt="" class="user-image mr-1 p-1" />
+                  {{identity.username}} {{identity.surnames}}
+                </a>
+
+                <div class="dropdown-menu">
+                  <a [routerLink]="['/work', identity.email]" class="dropdown-item">
+                    <i class="fas fa-user-cog text-primary"></i> Mi Perfíl
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a routerLink="/work" class="dropdown-item">
+                    <i class="fas fa-cog text-primary"></i> Configuración
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a  class="dropdown-item">
+                    <button >
+                    <i class="fas fa-arrow-right text-primary" (click)="[_authService.logout()]">   Cerrar Sesión</i>
+                  </button>
+                  </a>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>

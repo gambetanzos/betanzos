@@ -36,7 +36,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('identity');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/hoja-ruta/login']);
   }
 
   getToken() {

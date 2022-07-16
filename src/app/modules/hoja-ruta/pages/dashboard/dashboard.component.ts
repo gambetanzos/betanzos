@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartEvent, ChartType, ChartData } from 'chart.js';
 
 import { AuthService } from '../../services/auth.service';
 import { HojarutaService } from '../../services/hojaruta.service';
