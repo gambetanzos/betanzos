@@ -1,1 +1,39 @@
-<p>list-files works!</p>
+
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+          <div class="card">
+              <div class="card-body text-center">
+                  <span class="titulo">LISTA DE HOJAS DE RUTA </span>
+                  <button routerLink="/hoja-ruta/listhr"
+                  class="btn btn-secondary  float-start"> VOLVER</button>
+                  <button   class="btn btn-success float-end" [routerLink]="['/hoja-ruta/add-files',  hoja._id,] " >NUEVO</button>
+                  <table *ngIf="hojas.length > 0" class="table table-striped mt-3">
+                      <thead>
+                        <tr>
+                          <th  scope="col">Archivo</th>
+                          <th scope="col">Nombre</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let file of files" >
+                        <td >
+                          <div class="image-wrap">
+
+                            <a href="{{url + file.urihoja}}"  *ngIf="file.urihoja" target="_blank">
+                              <img src="assets/img/pdf.png" alt="{{hoja.nuit}}" >
+                              </a>
+                        </div>
+
+                        </td>
+                          <td>{{ file.namefile }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="hojas.length == 0">No hay usuarios para mostrar</h5>
+              </div>
+          </div>
+        </div>
+  </div>
+</div>

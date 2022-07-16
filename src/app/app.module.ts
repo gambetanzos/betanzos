@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentModule } from 'angular2-moment';
+import { AngularFileUploaderModule } from "angular-file-uploader";
 
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -34,6 +36,9 @@ import { MatSliderModule } from '@angular/material/slider';
     NgbModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
+    MomentModule,
+    AngularFileUploaderModule,
+
     // * MATERIAL IMPORTS
     MatIconModule,
     MatListModule,

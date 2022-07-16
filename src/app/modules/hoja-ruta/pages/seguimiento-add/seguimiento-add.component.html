@@ -1,1 +1,96 @@
-<p>seguimiento-add works!</p>
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <span class="titulo"> {{ titulo | uppercase}} <p class="fw-bold fa-2x">{{idnuit}}</p></span>
+          <form
+            class="mt-3"
+            [formGroup]="seguiForm"
+            (ngSubmit)="registerSegui()"
+          >
+            <div class="card p-2">
+              <label for="destino">Destino</label>
+              <div class="mb-2">
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  id="destino"
+                  formControlName="destino"
+                  [(ngModel)]="params"
+                  (change)="getSub()"
+                >
+                  <option selected>---Seleccione Destino---</option>
+                  <option *ngFor="let orgs of org">{{ orgs.nombredir }}</option>
+                </select>
+                <div
+                  class="text-danger"
+                  *ngIf="
+                    seguiForm.get('destino')?.hasError('required') &&
+                    seguiForm.get('destino')?.touched
+                  "
+                >
+                  <span>El cargo <strong>es obligatoria</strong></span>
+                </div>
+              </div>
+              <div class="mb-2">
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  formControlName="destino"
+                >
+                  <option selected>{{ params }}</option>
+                  <option *ngFor="let orgselect of orgselec">
+                    {{ orgselect.nombresubdir }}
+                  </option>
+                </select>
+                <div
+                  class="text-danger"
+                  *ngIf="
+                    seguiForm.get('destino')?.hasError('required') &&
+                    seguiForm.get('destino')?.touched
+                  "
+                >
+                  <span>El cargo <strong>es obligatoria</strong></span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <textarea
+                formControlName="detalles"
+                class="form-control"
+                placeholder="Escriba el detalle de instrucción"
+              ></textarea>
+              <div
+                class="text-danger"
+                *ngIf="
+                  seguiForm.get('detalles')?.hasError('required') &&
+                  seguiForm.get('detalles')?.touched
+                "
+              >
+                <span
+                  >Detalle de Instrucción <strong>es obligatoria</strong></span
+                >
+              </div>
+            </div>
+            <div class="mb-2">
+              <button
+                routerLink="/hoja-ruta/correspondencia"
+                class="btn btn-secondary btn-lg float-start"
+              >
+                VOLVER
+              </button>
+              <button
+                type="submit"
+                [disabled]="seguiForm.invalid"
+                class="btn btn-success btn-lg float-end"
+              >
+                ACEPTAR
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

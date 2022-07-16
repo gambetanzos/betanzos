@@ -1,1 +1,126 @@
-<p>list-asociar works!</p>
+<div class="d-flex justify-content-between">
+  <input type="button" value="Imprimir" (click)="ImprimirPDF()"/>
+  <input type="button" value="Descargar" (click)="downloadPDF()" />
+
+</div>
+
+<div>
+<div class="container">
+  <div class="row">
+    <div id="htmlData">
+      <div class="mt-0 ml-4 mr-2">
+        <div  class="d-flex justify-content-between ml-3 mb-0">
+          <div >
+            <img src="assets/img/logo1.png" class="logo ml-4 mb-0" />
+          </div>
+          <div class="text-center ml-5 mt-3 mb-0">
+            <p class="mb-0 fs-5">GOBIERNO AUTÓNOMO MUNICIPAL DE BETANZOS</p>
+            <p class="mb-0">
+              Primera Sección Municipal Provincial Cornelio Saavedra
+            </p>
+            <samp>Betanzos - Potosí - Bolivia</samp>
+            <p class="mb-0 fs-4">HOJA DE RUTA</p>
+          </div>
+          <div class="p-3 mt-4">
+            <h5 class="text-center mb-0 fs-5 mb-1 ">NUIT</h5>
+            <i (click)="refresh()" class="fas fa-retweet text-primary"></i>
+            <div  class="badge badge-info text-dark text-center fs-5">N°:&nbsp;&nbsp;<strong></strong>{{ruta.nuit | uppercase}}</div>
+          </div>
+        </div>
+
+        <div class="card pl-2 pr-2 border-3 border-primary mb-1">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <p class="card-text fw-normal">
+                <span >Fecha de recepcion: </span>{{ ruta.fecharesepcion | date:'dd/MM/yyyy'}}
+              </p>
+              <p class="card-text fw-normal" ><span>Hora: </span>{{ruta.fecharesepcion | date:'HH:MM:ss'}}</p>
+              <p class="card-text fw-normal">
+                <span>Fecha de documento: </span>{{ruta.fechadocumento | date:'dd/MM/yyyy'}}
+              </p>
+            </div>
+            <hr class="mt-0" />
+            <div class="d-flex justify-content-between">
+              <p class="card-text fw-normal" >
+                <span>Origen: </span>{{ruta.origen}}
+              </p>
+              <p class="card-text fw-normal"><span>Tipo de documento: </span>{{ruta.tipodoc}}</p>
+            </div>
+            <hr class="mt-0" />
+            <p  class="card-text text-break lh-1 pt-1 mb-1 fw-normal">
+              <span >Referencia: </span>{{ruta.referencia}}
+            </p>
+          </div>
+        </div>
+        <p class="mb-0 fs-4 text-center" >ASOCIADOS</p>
+
+
+          <div class="card pl-2 pr-2 border-3 border-primary mb-1">
+            <div *ngFor="let asos of aso" class="card-body">
+              <div [routerLink]="['/hoja-ruta/list-asociar',  asos._id,] "  class="d-flex justify-content-around">
+                <span class=" bagnuit badge badge-info text-dark text-center">N°:&nbsp;&nbsp;<strong></strong>{{asos.nuit | uppercase}}</span>
+              </div>
+            </div>
+          </div>
+        <div class=" ">
+          <div class="card border-3 border-primary mb-1">
+              <div class="card-body text-center">
+                  <span class="titulo">LISTA DE SEGUIMIENTO </span>
+                  <table  class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Derivado A...</th>
+                          <th scope="col">Instrucciones</th>
+                          <th scope="col">Detalle</th>
+                          <th scope="col">Fecha Recepcion</th>
+                          <th scope="col">Fecha Derivado</th>
+                          <th scope="col">Estado</th>
+                        </tr>
+                      </thead>
+                      <tbody >
+                        <tr *ngFor="let seguis of segui">
+                          <td *ngIf="id===seguis.idhj">{{ seguis.destino}}</td>
+                          <td *ngIf="id===seguis.idhj">{{ seguis.instrucciones}}</td>
+                          <td *ngIf="id===seguis.idhj">{{ seguis.detalles}}</td>
+                          <td *ngIf="id===seguis.idhj">
+                            <i  [ngClass]= "seguis.fecharecepcion === 'SIN RESEPCIONAR' ? 'badge badge-danger' : '' ">
+                              <span *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion}} </span>
+                              <span *ngIf="seguis.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion | amLocale: 'es' | amTimeAgo}} </span><br>
+                              <span *ngIf="seguis.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
+                            </i>
+                          </td>
+                          <td *ngIf="id===seguis.idhj">
+                              <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocale: 'es' | amTimeAgo}} </span><br>
+                              <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
+                          </td>
+                          <td *ngIf="id===seguis.idhj" [ngSwitch]="seguis.estado">
+                            <span *ngSwitchCase="'ENVIADO'" class="badge badge-danger">{{ seguis.estado }}</span>
+                            <span *ngSwitchCase="'RECIBIDO'" class="badge badge-success">{{ seguis.estado }}</span>
+                            <span *ngSwitchCase="'DERIVADO'" class="badge badge-info">{{ seguis.estado }}</span>
+                            <span *ngSwitchCase="'MALETIN'" class="badge badge-warning">{{ seguis.estado }}</span>
+                            <span *ngIf="seguis.estado != 'DERIVADO' && seguis.estado != 'MALETIN' && seguis.estado != 'RECIBIDO' && seguis.estado != 'ENVIADO'" class="badge badge-secondary text-dark">{{ seguis.estado }}</span>
+                          </td>
+                          <td *ngIf="id===seguis.idhj">{{ seguis.origen}}</td>
+                          <!--
+                          <td>
+                              <i [routerLink]="['/seguimiento-add']" class="fas fa-edit text-primary"></i>
+                              <i class="fas fa-trash text-danger"></i>
+                          </td>
+                          -->
+                        </tr>
+                      </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="segui.length == 0">No hay reguistros para mostrar</h5>
+              </div>
+          </div>
+          <div>
+            <i class="ml-3">Usuario: {{ identity.username}} {{ identity.surnames}}</i>
+            <i class="mr-3 float-end">Fecha Descarga: {{ date| amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

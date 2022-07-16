@@ -1,1 +1,300 @@
-<p>print-hr works!</p>
+<div class="d-flex justify-content-between">
+  <input type="button" value="Imprimir"(click)="ImprimirPDF()" />
+  <input type="button" value="Descargar" (click)="downloadPDF()"/>
+
+</div>
+
+<div>
+<div class="container">
+  <div class="row">
+    <div id="htmlData">
+      <div class="mt-0 ml-5 mr-4">
+        <div  class="d-flex justify-content-between ml-3 mb-0">
+          <div >
+            <img src="assets/img/logo1.png" class="logo ml-4 mb-0" />
+          </div>
+          <div class="text-center ml-5 mt-3 mb-0">
+            <p class="mb-0 fs-5">GOBIERNO AUTÓNOMO MUNICIPAL DE BETANZOS</p>
+            <p class="mb-0">
+              Primera Sección Municipal Provincial Cornelio Saavedra
+            </p>
+            <samp>Betanzos - Potosí - Bolivia</samp>
+            <p class="mb-0 fs-4">HOJA DE RUTA</p>
+          </div>
+          <div class="p-3 mt-4">
+            <h5 class="text-center mb-0 fs-5 mb-1 ">NUIT</h5>
+            <div  class="badge badge-info text-dark text-center fs-5">N°:&nbsp;&nbsp;<strong></strong>{{ruta.nuit | uppercase}}</div>
+          </div>
+        </div>
+
+        <div class="card pl-2 pr-2 border-3 border-primary mb-1">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <p class="card-text fw-normal">
+                <span >Fecha de recepcion: </span>{{ ruta.fecharesepcion | date:'dd/MM/yyyy'}}
+              </p>
+              <p class="card-text fw-normal" ><span>Hora: </span>{{ruta.fecharesepcion | date:'HH:MM:ss'}}</p>
+              <p class="card-text fw-normal">
+                <span>Fecha de documento: </span>{{ruta.fechadocumento | date:'dd/MM/yyyy'}}
+              </p>
+              <p class="card-text fw-normal"><span>Telefono: </span>{{ruta.contacto}}</p>
+            </div>
+            <hr class="mt-0" />
+            <div class="d-flex justify-content-between">
+              <p class="card-text fw-normal" >
+                <span>Origen: </span>{{ruta.origen}}
+              </p>
+              <p class="card-text fw-normal"><span>Tipo de documento: </span>{{ruta.tipodoc}}</p>
+            </div>
+            <hr class="mt-0" />
+            <p  class="card-text text-break lh-1 pt-1 mb-1 fw-normal">
+              <span >Referencia: </span>{{ruta.referencia}}
+            </p>
+          </div>
+        </div>
+
+        <div class="card border-3 border-primary mr-0 mb-1">
+          <div class="row mr-0 ml-0">
+            <div class="col-md-8">
+              <div class="d-flex justify-content-around">
+                <p class="text-center mb-0">
+                  <span>DERIVADO A LA UNIDAD DE: </span>
+                </p>
+                <p class="text-center mb-0">
+                  <span>INSTRUCCION: </span>
+                </p>
+              </div>
+              <div class="d-flex justify-content-around">
+                <div class="">
+                  <p class="fw-normal lh-1 mb-2">Concejo Municipal</p>
+                  <p class="fw-normal lh-1 mb-2">Secretaria despacho</p>
+                  <p class="fw-normal lh-1 mb-2">Asesoría Legal</p>
+                  <p class="fw-normal lh-1 mb-2">Stria Mcpal Adm.Fin.</p>
+                  <p class="fw-normal lh-1 mb-2">Stia. Mcipal de DDHH</p>
+                  <p class="fw-normal lh-1 mb-2">Stria Mcpal de infraestructura</p>
+                  <p class="fw-normal lh-1 mb-2">Stria Mcpal de DD EE</p>
+                  <p class="fw-normal lh-1 mb-2">Planificación</p>
+                  <p class="fw-normal lh-1 mb-2">Recursos Humanos</p>
+                  <p class="fw-normal lh-1 mb-2">Contabilidad</p>
+                </div>
+                <div class="mr-0">
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+
+                </div>
+                <div class="">
+                  <p class="fw-normal lh-1 mb-2">Activos Fijos</p>
+                  <p class="fw-normal lh-1 mb-2">Almacenes</p>
+                  <p class="fw-normal lh-1 mb-2">Defensorías</p>
+                  <p class="fw-normal lh-1 mb-2">SLIM.</p>
+                  <p class="fw-normal lh-1 mb-2">Omot</p>
+                  <p class="fw-normal lh-1 mb-2">Intendencia</p>
+                  <p class="fw-normal lh-1 mb-2">Recaudaciones</p>
+                  <p class="fw-normal lh-1 mb-2">Comunicación</p>
+                  <p class="fw-normal lh-1 mb-2">Turismo y Cultura</p>
+                  <p class="fw-normal lh-1 mb-2">__________________</p>
+                </div>
+                <div class="">
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                </div>
+                <div class=" mt-2 ml-4">
+                  <p class="fw-normal lh-1 mb-2">Remita informe</p>
+                  <p class="fw-normal lh-1 mb-2">Dar el curso al trámite</p>
+                  <p class="fw-normal lh-1 mb-2">Supervisé</p>
+                  <p class="fw-normal lh-1 mb-2">Proceda a su registro</p>
+                  <p class="fw-normal lh-1 mb-2">Prepare el documento</p>
+                  <p class="fw-normal lh-1 mb-2">Revíse</p>
+                  <p class="fw-normal lh-1 mb-2">Resuelva</p>
+                  <p class="fw-normal lh-1 mb-2">Para su conocimiento</p>
+                  <p class="fw-normal lh-1 ">___________________</p>
+                </div>
+                <div class="mr-3 mt-2">
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                  <p class="card cardchek border-2 border-secondary "></p>
+                </div>
+             </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class=" mt-5 ml-0">
+                <br>
+                <br>
+                <p class="fw-normal lh-1 mb-2 text-center">Firma y sello MAE</p>
+                <p class="fw-normal lh-1 mb-2">........................................................................................</p>
+                <p class="fw-normal lh-1 mb-2">........................................................................................</p>
+                <p class="fw-normal lh-1 mb-2">........................................................................................</p>
+                <p class="fw-normal lh-1 mb-2">........................................................................................</p>
+                <p class="fw-normal lh-1 mb-2 mt-4 text-center">Fecha:........./.........../...........</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="mt-1  ">
+          <div class="row ">
+            <div class="col mr-0 pr-0 pl-3">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+            <div class="col pl-1">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-1  ">
+          <div class="row ">
+            <div class="col mr-0 pr-0 pl-3">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+            <div class="col pl-1">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-1  ">
+          <div class="row ">
+            <div class="col mr-0 pr-0 pl-3">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+            <div class="col pl-1">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-1  ">
+          <div class="row ">
+            <div class="col mr-0 pr-0 pl-3">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+            <div class="col pl-1">
+              <div class="card border-3 border-primary p-2 pb-0">
+                <label class="form-check-label mt-1 "> Fecha de recepción:.............../................./........................
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Hora:.............:............ </label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <label class="form-check-label"> Fecha:....../......../..........Hora:......:......Derivado A:............................................................ </label>
+                <label class="form-check-label"> Instrucción:........................................................................................................................ </label>
+                <label class="form-check-label">............................................................................................................................................ </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

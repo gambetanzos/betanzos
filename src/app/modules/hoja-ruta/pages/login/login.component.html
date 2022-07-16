@@ -1,2 +1,41 @@
-<p>login works!</p>
-<h1>,lsd,lsd,ldsdlsd,dsl,dsld,ds,ld,</h1>
+<div class="row text-center">
+  <div class="col-md-4 mx-auto">
+    <div class="card">
+      <div class="card-header">INICIAR SESIÓN</div>
+      <div class="card-body">
+        <form (submit)="login()">
+          <div class="p-xl-10 p-lg-6 p-md-8 p-sm-10 mb-3">
+            <img src="assets/img/logogamb.png" class="login-logo" />
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="alert">
+            {{alert}}
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="user.email"
+              name="email"
+              class="form-control form-control-lg"
+              placeholder="email/usuario"
+              required
+              autofocus
+            />
+          </div>
+          <div class="form-group mt-4">
+            <input
+              type="password"
+              [(ngModel)]="user.password"
+              name="password"
+              class="form-control form-control-lg"
+              placeholder="password"
+              required
+            />
+          </div>
+          <div class="d-flex justify-content-around mt-3">
+            <button class="btn btn-success btn-block">INICIAR SESIÓN</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

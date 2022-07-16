@@ -2,6 +2,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MomentModule } from 'angular2-moment';
+import { AngularFileUploaderModule } from "angular-file-uploader";
 
 
 import { HojaRutaRoutingModule } from './hoja-ruta-routing.module';
@@ -31,6 +34,7 @@ import { AsociarComponent } from './pages/asociar/asociar.component';
 import { ListAsociarComponent } from './pages/list-asociar/list-asociar.component';
 import { SearchComponent } from './pages/search/search.component';
 import { RegistroComponent } from './pages/registro/registro.component';
+import { SpinerComponent } from './pages/spiner/spiner.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,8 @@ import { RegistroComponent } from './pages/registro/registro.component';
     AsociarComponent,
     ListAsociarComponent,
     SearchComponent,
-    RegistroComponent
+    RegistroComponent,
+    SpinerComponent
 
   ],
   imports: [
@@ -67,7 +72,10 @@ import { RegistroComponent } from './pages/registro/registro.component';
     HojaRutaRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-
+    NgxPaginationModule,
+    MomentModule,
+    AngularFileUploaderModule,
+  
   ]
 })
 export class HojaRutaModule { }
