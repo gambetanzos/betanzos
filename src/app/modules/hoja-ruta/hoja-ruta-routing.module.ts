@@ -42,6 +42,7 @@ const routes: Routes = [
       {path:'hoja-add/:id',component:HojaAddComponent,canActivate:[AuthGuard]},
       {path:'seguimiento/:id',component:SeguimientoComponent},
       {path:'seguimiento-add/:id',component:SeguimientoAddComponent,canActivate:[AuthGuard]},
+      {path:'seguimiento-add/:id/:ids',component:SeguimientoAddComponent,canActivate:[AuthGuard]},
       {path:'print/:id',component:PrintHrComponent,canActivate:[AuthGuard]},
       {path:'add-files/:id',component:AddFilesComponent,canActivate:[AuthGuard]},
       {path:'list-files/:id',component:ListFilesComponent,canActivate:[AuthGuard]},

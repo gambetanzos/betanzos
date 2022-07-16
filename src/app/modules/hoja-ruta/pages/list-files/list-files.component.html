@@ -7,7 +7,7 @@
                   <span class="titulo">LISTA DE HOJAS DE RUTA </span>
                   <button routerLink="/hoja-ruta/listhr"
                   class="btn btn-secondary  float-start"> VOLVER</button>
-                  <button   class="btn btn-success float-end" [routerLink]="['/hoja-ruta/add-files',  hoja._id,] " >NUEVO</button>
+                  <button   class="btn btn-success float-end" [routerLink]="['/hoja-ruta/add-files',  hoja._id,] " *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA' || identity.roles==='SUPER_USER' || identity.roles==='USER' || identity.roles==='ADMIN'" >NUEVO</button>
                   <table *ngIf="hojas.length > 0" class="table table-striped mt-3">
                       <thead>
                         <tr>

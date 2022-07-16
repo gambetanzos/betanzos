@@ -4,14 +4,14 @@
           <div class="card">
               <div class="card-body text-center">
                   <span class="titulo">LISTA DE HOJAS DE RUTA </span>
-                  <button class="btn btn-success float-end" routerLink="/hoja-ruta/hoja-add">NUEVO</button>
+                  <button class="btn btn-success float-end" routerLink="/hoja-ruta/hoja-add" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">NUEVO</button>
                   <div class="form-group m-0">
                     <input type="text" class="form-control" name="filterhoja" placeholder="Filtrar por numero Hoja de Ruta" [(ngModel)]="filterhoja">
                   </div>
                   <table *ngIf="hojas.length > 0" class="table table-striped mt-0">
                       <thead >
                         <tr>
-                          <th  scope="col">Enviar</th>
+                          <th  scope="col" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">Enviar</th>
                           <th scope="col">NUIT</th>
                           <th scope="col">Fecha de Recepción</th>
                           <th scope="col">HORA</th>
@@ -20,14 +20,14 @@
                           <th scope="col">Referencia</th>
                           <th scope="col">Estado</th>
                           <th scope="col">Seguimiento</th>
-                          <th scope="col" >Imprimir</th>
+                          <th scope="col" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">Imprimir</th>
                           <th scope="col">Adjunto</th>
-                          <th scope="col" >Acciones</th>
+                          <th scope="col" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr [ngClass]= "hoja.estado === 'REGISTRADO' ? 'table-danger border-2 border-danger' : 'table-success border-2 border-success'"   *ngFor="let hoja of hojas | paginate: {itemsPerPage: 10  , currentPage: pageActual}">
-                        <td >
+                        <td *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'">
                             <i [routerLink]="['/hoja-ruta/seguimiento-add',  hoja._id,] " class="fas fa-space-shuttle text-primary " *ngIf="hoja.estado === 'RECIBIDO'" ></i>
                             <i [routerLink]="null " class="fas fa-space-shuttle text-primary" style="color:rgb(171, 178, 241) !important" *ngIf="hoja.estado === 'ENVIADO'"  ></i>
                         </td>
@@ -38,7 +38,7 @@
                           <td>{{ hoja.origen }}</td>
 
                           <td>{{ hoja.referencia }}</td>
-                          <td (click)="cambiarestado(hoja._id)" [ngSwitch]="hoja.estado" >
+                          <td *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'" (click)="cambiarestado(hoja._id)" [ngSwitch]="hoja.estado" >
                             <span *ngSwitchCase="'REGISTRADO'" class="badge est badge-danger" >{{ hoja.estado }}</span>
                             <span *ngSwitchCase="'RECIBIDO'" class="badge est badge-success" >{{ hoja.estado }}</span>
                             <span *ngSwitchCase="'ENVIADO'" class="badge est badge-info" >{{ hoja.estado }}</span>
@@ -54,13 +54,13 @@
 
                           <i [routerLink]="['/hoja-ruta/asociar',  hoja.nuit ]"  class="fas fa-paste text-primary " ></i>
                       </td>
-                      <td >
+                      <td *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'" >
                         <i [routerLink]="['/hoja-ruta/print',  hoja._id ]" class="fas fa-print text-primary"></i>
                     </td>
                       <td>
                         <i [routerLink]="['/hoja-ruta/list-files',  hoja._id ]" class="fas fa-cloud-download-alt" style="color:rgb(29, 14, 248) !important"></i>
                     </td>
-                          <td >
+                          <td *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA'" >
                               <i [routerLink]="['/hoja-ruta/hoja-add/', hoja._id]" class="fas fa-edit text-primary" *ngIf="hoja.estado === 'REGISTRADO'"  ></i>
                               <i [routerLink]="null" class="fas fa-edit text-primary" style="color:rgb(124, 150, 235) !important" *ngIf="hoja.estado === 'ENVIADO'" ></i>
                               <i [routerLink]="null" class="fas fa-edit text-primary" style="color:rgb(124, 150, 235) !important" *ngIf="hoja.estado === 'RECIBIDO'" ></i>

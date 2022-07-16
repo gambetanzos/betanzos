@@ -4,7 +4,7 @@
   </div>
   <h2 matSubheader class="mt-2">APLICACIONES</h2>
 
-  <ul class="side-bar__list" routerLinkActive="list-item-active"  routerLink="/home">
+  <ul class="side-bar__list" routerLinkActive="list-item-active"  routerLink="/home" >
       <li  >
           <div class="list-wrapper-item">
                <i class="fas fa-home"></i>
@@ -12,7 +12,7 @@
           </div>
       </li>
   </ul>
-  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/dashboard">
+  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/dashboard"*ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA' || identity.roles==='SUPER_USER' || identity.roles==='USER' || identity.roles==='ADMIN'">
     <li  >
         <div class="list-wrapper-item">
              <i class="fa fa-dashboard"></i>
@@ -20,7 +20,7 @@
         </div>
     </li>
   </ul>
-  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/usuarios">
+  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/usuarios"*ngIf="identity && identity.roles==='SUPER_ADMIN' " >
     <li  >
         <div class="list-wrapper-item">
              <i class="fas fa-users"></i>
@@ -28,7 +28,7 @@
         </div>
     </li>
   </ul>
-  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/correspondencia">
+  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/correspondencia" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA' || identity.roles==='SUPER_USER' || identity.roles==='USER' || identity.roles==='ADMIN'">
     <li  >
         <div class="list-wrapper-item">
              <i class="fas fa-clipboard"></i>
@@ -36,7 +36,7 @@
         </div>
     </li>
   </ul>
-  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/listhr">
+  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/listhr" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA' || identity.roles==='SUPER_USER' || identity.roles==='USER' || identity.roles==='ADMIN'">
     <li  >
         <div class="list-wrapper-item">
              <i class="fas fa-directions"></i>
@@ -44,7 +44,7 @@
         </div>
     </li>
   </ul>
-  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/organizacion">
+  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/hoja-ruta/organizacion" *ngIf="identity && identity.roles==='SUPER_ADMIN'">
     <li  >
         <div class="list-wrapper-item">
              <i class="fas fa-sitemap"></i>
@@ -52,7 +52,7 @@
         </div>
     </li>
   </ul>
-  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/work">
+  <ul class="side-bar__list" routerLinkActive="list-item-active" routerLink="/work" *ngIf="identity && identity.roles==='SUPER_ADMIN' || identity.roles==='SECRETARIA' || identity.roles==='SUPER_USER' || identity.roles==='USER' || identity.roles==='ADMIN'">
     <li  >
         <div class="list-wrapper-item">
              <i class="fas fa-line-chart"></i>

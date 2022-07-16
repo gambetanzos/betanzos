@@ -1,11 +1,14 @@
 .card-img-overlay{
   background-color: rgba(79,185,168,.5);
-  width: 40%;
-  height: 30%;
   position: absolute;
-  top: 10%;
-  left: 55%;
   border-radius: 8px;
+  top: 140%;
+  left: 18%;
+  width: 500px;
+  height: 250px;
+  margin-top: -250px;
+  margin-left: -250px;
+  text-align: center;
 }
 .card-al{
   padding: 20px !important;
