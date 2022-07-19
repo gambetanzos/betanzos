@@ -9,16 +9,9 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'angular2-moment';
 import { AngularFileUploaderModule } from "angular-file-uploader";
-
-
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
+import { AuthGuard } from './auth.guard';
+import { TokenService } from './modules/hoja-ruta/services/token.service';
 
 
 
@@ -38,21 +31,16 @@ import { MatSliderModule } from '@angular/material/slider';
     NgxPaginationModule,
     MomentModule,
     AngularFileUploaderModule,
-
-    // * MATERIAL IMPORTS
-    MatIconModule,
-    MatListModule,
-    MatSliderModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatToolbarModule,
-    MatMenuModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
-
+    AuthGuard,{
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

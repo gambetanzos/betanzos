@@ -109,7 +109,7 @@ export class LisrhrComponent implements OnInit {
       .then((willDelete) => {
         if (willDelete) {
               this._hojaService.EditarHoja(this.idh, HOJA).subscribe(data => {
-                swal("El tramite fue finalizado", {
+                swal("El tramite fue recibido", {
                   icon: "success",
                 });
                 console.log(HOJA);

@@ -116,7 +116,7 @@ export class CorrespondenciaComponent implements OnInit {
       this.ids = this.seguiss._id;
       if (this.seguiss.fecharecepcion === "SIN RESEPCIONAR") {
         this._seguiService.EditarSeguis(this.ids, SEGUI).subscribe(data => {
-          this.router.navigate(['/correspondencia']);
+          this.router.navigate(['hoja-ruta/correspondencia']);
 
           this.getSeguiO();
           this.obtenertotal();
@@ -138,8 +138,8 @@ export class CorrespondenciaComponent implements OnInit {
     }
     if (this.seguiss.estado === "RECIBIDO") {
     swal({
-      title: "¿Estás seguro finalizar???",
-      text: "Esta seguro de finalizar el trámite?????????",
+      title: "¿Estás seguro archivar en tu MALETIN???",
+      text: "Esta seguro archivar en tu MALETIN el trámite?????????",
       icon: "warning",
       buttons: [true, true],
       dangerMode: true
@@ -151,7 +151,7 @@ export class CorrespondenciaComponent implements OnInit {
                   icon: "success",
                 });
                 console.log(SEGUI);
-                this.router.navigate(['/correspondencia']);
+                this.router.navigate(['hoja-ruta/correspondencia']);
 
                 this.getSeguiO();
                 this.obtenertotal();
@@ -159,7 +159,7 @@ export class CorrespondenciaComponent implements OnInit {
                 console.log(error);
               })
         } else {
-          swal("Ha cancelado la finalizacion del tramite");
+          swal("Ha cancelado la Pre-finalizado del tramite");
         }
       });
     }
@@ -190,7 +190,7 @@ export class CorrespondenciaComponent implements OnInit {
                   icon: "success",
                 });
                 console.log(SEGUI);
-                this.router.navigate(['/correspondencia']);
+                this.router.navigate(['hoja-ruta/correspondencia']);
 
                 this.getSeguiO();
                 this.obtenertotal();

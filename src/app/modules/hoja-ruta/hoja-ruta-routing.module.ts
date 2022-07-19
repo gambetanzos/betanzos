@@ -47,7 +47,7 @@ const routes: Routes = [
       {path:'add-files/:id',component:AddFilesComponent,canActivate:[AuthGuard]},
       {path:'list-files/:id',component:ListFilesComponent,canActivate:[AuthGuard]},
       {path:'list-asociar/:id',component:ListAsociarComponent,canActivate:[AuthGuard]},
-      {path:'asociar/:id',component:AsociarComponent,canActivate:[AuthGuard]},
+      {path:'asociar/:nuit',component:AsociarComponent,canActivate:[AuthGuard]},
       {path:'organizacion',component:OrganizacionComponent,canActivate:[AuthGuard]},
       {path:'organizacion-add',component:OrganizacionAddComponent,canActivate:[AuthGuard]},
       {path:'organizacion-add/:id',component:OrganizacionAddComponent,canActivate:[AuthGuard]},

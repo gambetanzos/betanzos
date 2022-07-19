@@ -90,7 +90,7 @@
             </tr>
           </thead>
 
-          <tbody *ngFor="let seguis of segui ">
+          <tbody *ngFor="let seguis of segui| filter:filterSeg ">
             <tr *ngIf="radioButtonSeleccionado == 'Todos' || radioButtonSeleccionado == seguis.estado">
               <td>
                 <i

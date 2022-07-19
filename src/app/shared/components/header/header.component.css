@@ -1,5 +1,5 @@
   .logo img {
-    width: 200px;
+    width: 180px;
   }
 
 
@@ -7,7 +7,7 @@
   #menu{
     justify-content: center;
     left: 20px;
-    margin-right: 20px;
+    margin-right: 50px;
   }
 
 
@@ -16,10 +16,9 @@
   #menu a{
     text-decoration: none;
     color: rgb(255, 255, 255);
-    transition: 300ms all;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 23px;
-    padding-left: 30px;
+    font-size: 20px;
+
 
   }
 

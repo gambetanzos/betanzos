@@ -4,7 +4,7 @@
   margin-right: 20px;
 }
 header{
-  margin: 0 0 0 16rem;
+  margin: 0 0 0 14rem;
   background-color: rgba(10, 190, 235, 0.5);
 }
 .container-fluid {
@@ -14,7 +14,7 @@ margin-left: 10% !important;
 background-color: rgba(54, 151, 216, 0.5);
 }
 .user {
-  font-size: 10px;
+  font-size: 14px;
 }
 .user-image {
   border-radius: 50%;
@@ -22,8 +22,8 @@ background-color: rgba(54, 151, 216, 0.5);
   height: 50px;
 }
 .user-image-icon {
-  height: 18px;
-  font-size: 16px;
+  height: 15px;
+  font-size: 14px;
 }
 ul li {
   list-style: none;

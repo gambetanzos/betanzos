@@ -35,6 +35,7 @@ import { ListAsociarComponent } from './pages/list-asociar/list-asociar.componen
 import { SearchComponent } from './pages/search/search.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { SpinerComponent } from './pages/spiner/spiner.component';
+import { FilterPipe } from './pages/pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { SpinerComponent } from './pages/spiner/spiner.component';
     ListAsociarComponent,
     SearchComponent,
     RegistroComponent,
-    SpinerComponent
+    SpinerComponent,
+    FilterPipe
 
   ],
   imports: [

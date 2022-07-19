@@ -6,6 +6,8 @@ import { SeguimientoService } from '../../services/seguimiento.service';
 import { Hojaruta } from '../../models/hojaruta';
 import { AuthService } from '../../services/auth.service';
 import { Segui } from '../../models/seguimiento';
+
+
 @Component({
   selector: 'app-asociar',
   templateUrl: './asociar.component.html',
@@ -54,6 +56,7 @@ export class AsociarComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    console.log(this.nuit)          
   }
   loadUser() {
     this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
