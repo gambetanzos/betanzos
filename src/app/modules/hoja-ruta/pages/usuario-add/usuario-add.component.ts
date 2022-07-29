@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { User } from '../../models/user';
 import swal from 'sweetalert';
 import { UsuarioService } from '../../services/usuario.service';
@@ -15,7 +14,6 @@ import { OrganizacionService } from '../../services/organizacion.service';
   styleUrls: ['./usuario-add.component.css']
 })
 export class UsuarioAddComponent implements OnInit {
-  subscription: Subscription = new Subscription;
   params: string = "";
   public identity: any ;
   orgselec: any []=[] ;
@@ -132,7 +130,7 @@ export class UsuarioAddComponent implements OnInit {
     }
   }
   getOrga(){
-    this.subscription = this._orgService.getOrg().subscribe(data => {
+  this._orgService.getOrg().subscribe(data => {
       console.log(data);
       this.org = data;
     }, error => {
@@ -142,7 +140,7 @@ export class UsuarioAddComponent implements OnInit {
   getSub() {
 
     if (this.params !== null) {
-      this.subscription =  this._orgService.obtenerOrg(this.params).subscribe(data => {
+   this._orgService.obtenerOrg(this.params).subscribe(data => {
         this.orgselec = data.subdirecciones;
 
       }, error => {

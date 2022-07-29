@@ -33,6 +33,8 @@ label{
 .badge {
   margin: 2px;
   font-size: 90%;
-
 }
-
+.rec{
+  text-transform: capitalize !important;
+  font-size: 10px;
+}

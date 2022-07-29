@@ -6,11 +6,12 @@ export interface Segui{
   origen?:string;
   referencia?: string;
   detalles?: string;
-  instrucciones?: number;
+  recibidox?: string;
   origenhr?: string
   fechaderivado ?:Date;
   fecharecepcion?:Date;
   estado?: string;
   asociado?: Boolean;
-
+  smsarchivo?:string;
+  fecharespuesta?:Date;
 }

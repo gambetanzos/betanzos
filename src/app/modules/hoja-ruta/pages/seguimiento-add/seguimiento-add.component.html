@@ -3,7 +3,10 @@
     <div class="col-lg-6 offset-lg-3">
       <div class="card">
         <div class="card-body text-center">
-          <span class="titulo"> {{ titulo | uppercase}} <p class="fw-bold fa-2x">{{idnuit}}</p></span>
+          <span class="titulo">
+            {{ titulo | uppercase }}
+            <p class="fw-bold fa-2x">{{ idnuit }}</p></span
+          >
           <form
             class="mt-3"
             [formGroup]="seguiForm"
@@ -19,6 +22,7 @@
                   formControlName="destino"
                   [(ngModel)]="params"
                   (change)="getSub()"
+                  (change)="getuser()"
                 >
                   <option selected>---Seleccione Destino---</option>
                   <option *ngFor="let orgs of org">{{ orgs.nombredir }}</option>
@@ -38,6 +42,8 @@
                   class="form-select"
                   aria-label="Default select example"
                   formControlName="destino"
+                  [(ngModel)]="params2"
+                  (change)="getuser()"
                 >
                   <option selected>{{ params }}</option>
                   <option *ngFor="let orgselect of orgselec">
@@ -53,8 +59,14 @@
                 >
                   <span>El cargo <strong>es obligatoria</strong></span>
                 </div>
+                <div *ngIf="mostrarError" class="alert alert-dismissible alert-danger">
+                  <strong>{{ textError | uppercase  }}</strong>
+                </div>
               </div>
             </div>
+            <p *ngIf="params" class="badge bg-info text-dark">
+              {{ user.username }} {{ user.surnames }}
+            </p>
             <div class="mb-2">
               <textarea
                 formControlName="detalles"
@@ -69,8 +81,8 @@
                 "
               >
                 <span
-                  >Detalle de Instrucción <strong>es obligatoria</strong></span
-                >
+                  >Detalle de Instrucción <strong>es obligatoria</strong>
+                </span>
               </div>
             </div>
             <div class="mb-2">

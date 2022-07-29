@@ -50,7 +50,7 @@
                           </td>
                         <td>
                           <i [routerLink]="['/hoja-ruta/seguimiento',  hoja._id ]" class="fas fa-align-justify text-primary"></i>
-                          <i  [routerLink]="['/hoja-ruta/list-asociar', hoja._id]" *ngIf="hoja.asociado.length>0" class="fas fa-paperclip text-primary"></i>
+                          <i  (click)="listaso(hoja._id)" *ngIf="hoja.asociado.length>0" class="fas fa-paperclip text-primary"></i>
 
                           <i [routerLink]="['/hoja-ruta/asociar',  hoja.nuit ]"  class="fas fa-paste text-primary " *ngIf=" hoja.estado !== 'REGISTRADO' && hoja.estado !== 'RECIBIDO' && identity && identity.roles==='SUPER_USER' || identity.roles==='ADMIN'"></i>
                       </td>

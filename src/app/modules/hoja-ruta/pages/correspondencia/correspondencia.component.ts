@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert';
-import { Subscription } from 'rxjs';
+import { identity, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -14,29 +14,48 @@ import { Segui } from '../../models/seguimiento';
   styleUrls: ['./correspondencia.component.css']
 })
 export class CorrespondenciaComponent implements OnInit {
+  //archivar
+  sms: string = "";
+  datito:any=null;
+  //mostrar aso
+  aso: any = [];
+  asonuit: any = {};
+  lisaso: string = " ";
+  //-------------reply
+  nuitre: any = [];
+  nuitreply: string = "";
+  seguireply: any = [];
+  res: any = {};
+  idreply: number = 0;
+  mostrarError: boolean;
+  textError: string;
+  //-------
+  params: any = [];
+  seguiaso: any = [];
   subscription: Subscription = new Subscription;
   public seguis: Segui[] = [];
   segui: any = [];
   filterSeg: any = ""
-  loading: boolean=true;
+  loading: boolean = true;
   hoja: any = [];
-  res: any = {};
+
   seguiss: any = [];
   ruta: any[] = [];
   today = new Date();
   estadorec: string = "RECIBIDO";
+  recibido: string = " "
   estadofin: string = "MALETIN";
   ids: string = "";
-  nuithr:string="";
-  destino: string="";
+  nuithr: string = "";
+  destino: string = "";
   pageActual: number = 1;
-  cantder:number = 0;
-  canten:number = 0;
-  cantrec:number = 0;
-  cantfin:number = 0;
-  total:number = 0;
-  totalarc:number = 0;
-  canaso:number = 0;
+  cantder: number = 0;
+  canten: number = 0;
+  cantrec: number = 0;
+  cantfin: number = 0;
+  total: number = 0;
+  totalarc: number = 0;
+  canaso: number = 0;
   public identity: any = [];
   public token: any;
   radioButtonSeleccionado = 'RECIBIDO';
@@ -47,19 +66,21 @@ export class CorrespondenciaComponent implements OnInit {
     private _hojaService: HojarutaService,
     public _authService: AuthService,
     private aRouter: ActivatedRoute) {
-      this.loadUser();
-      this.loading = false;
-     }
+    this.loadUser();
+    this.loading = false;
+    this.mostrarError = false;
+    this.textError = '';
+  }
 
   ngOnInit(): void {
     this.getSegui();
     this.getHoja();
     this.getSeguiO();
     this.obtenertotal();
+
   }
   loadUser() {
     this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
-
   }
   getSegui() {
     this._seguiService.getsegui().subscribe(data => {
@@ -68,14 +89,14 @@ export class CorrespondenciaComponent implements OnInit {
       console.log(error);
     })
   }
-  getSeguiO(){
+  getSeguiO() {
     this.loading = true;
-     let RegExp = /[^()]*/g
-     this.destino = this.identity.post;
-     let destino1: any = RegExp.exec(this.destino);
-     this._seguiService.obtenerSeguiO(destino1).subscribe(data => {
+    let RegExp = /[^()]*/g
+    this.destino = this.identity.post;
+    let destino1: any = RegExp.exec(this.destino);
+    this._seguiService.obtenerSeguiO(destino1).subscribe(data => {
       this.loading = false;
-     this.segui = data;
+      this.segui = data;
     }, error => {
       console.log(error);
     })
@@ -88,28 +109,29 @@ export class CorrespondenciaComponent implements OnInit {
     })
   }
 
-  obtenertotal(){
+  obtenertotal() {
     this.loading = true;
     let RegExp = /[^()]*/g
     this.destino = this.identity.post;
     let destino1: any = RegExp.exec(this.destino);
     this._seguiService.obtenerSeguiO(destino1).subscribe(data => {
       this.loading = false;
-    this.seguis = data;
-    this.total = this.seguis.length;
-    this.cantrec = this.seguis.filter(list => list.estado === 'RECIBIDO').length;
-    this.cantder = this.seguis.filter(list => list.estado === 'DERIVADO').length;
-    this.canten = this.seguis.filter(list => list.estado === 'ENVIADO').length;
-    this.cantfin = this.seguis.filter(list => list.estado === 'MALETIN').length;
-    this.totalarc = this.seguis.filter(list => list.estado === 'ARCHIVADO').length;
-   }, error => {
-     console.log(error);
-   })
+      this.seguis = data;
+      this.total = this.seguis.length;
+      this.cantrec = this.seguis.filter(list => list.estado === 'RECIBIDO').length;
+      this.cantder = this.seguis.filter(list => list.estado === 'DERIVADO').length;
+      this.canten = this.seguis.filter(list => list.estado === 'ENVIADO').length;
+      this.cantfin = this.seguis.filter(list => list.estado === 'MALETIN').length;
+      this.totalarc = this.seguis.filter(list => list.estado === 'ARCHIVADO').length;
+    }, error => {
+      console.log(error);
+    })
   }
   cambiarestado(id: any) {
     const SEGUI: Segui = {
       fecharecepcion: this.today,
       estado: this.estadorec,
+      recibidox: this.identity.username + " " + this.identity.surnames
     }
     this._seguiService.obtenerSegui(id).subscribe(data => {
       this.seguiss = data;
@@ -128,83 +150,157 @@ export class CorrespondenciaComponent implements OnInit {
       console.log(error);
     })
   }
+  listaso(id: any) {
+    this._hojaService.obtenerHoja(id).subscribe(data => {
+      this.aso = data.serverResponse.asociado
+      for (let i = 0; i < this.aso.length; i++) {
+        this.asonuit = this.aso[i];
+        this.lisaso = this.lisaso + this.asonuit.nuit + " | "
+      }
+      swal({
+        text: "Al N°"+" "+this.asonuit.nuit,
+        title: "ASOCOADO N°"+" "+this.lisaso,
+        buttons: ["Volver", "Ir a Ver"]
+      })
+        .then((enviar) => {
+          if (enviar) {
+            this.router.navigate(['hoja-ruta/list-asociar', id]);
+          }
+        });
+      this.lisaso = ""
+    }, error => {
+      console.log(error);
+    })
+  }
   finalizar(id: any) {
-    this._seguiService.obtenerSegui(id).subscribe(data => {
-      this.seguiss = data;
-      this.ids = this.seguiss._id;
-
-    const SEGUI: Segui = {
-      estado: this.estadofin,
-    }
-    if (this.seguiss.estado === "RECIBIDO") {
     swal({
       title: "¿Estás seguro archivar en tu MALETIN???",
-      text: "Esta seguro archivar en tu MALETIN el trámite?????????",
       icon: "warning",
-      buttons: [true, true],
-      dangerMode: true
+      text: "Debe insertar el motivo o detalle del envio a tu maletin...",
+      content: {
+        element: "input",
+      },
+      buttons: ["Cancelar", "Enviar"]
     })
-      .then((willDelete) => {
-        if (willDelete) {
-              this._seguiService.EditarSeguis(this.ids, SEGUI).subscribe(data => {
-                swal("El tramite fue finalizado", {
-                  icon: "success",
-                });
-                console.log(SEGUI);
-                this.router.navigate(['hoja-ruta/correspondencia']);
-
-                this.getSeguiO();
-                this.obtenertotal();
-              }, error => {
-                console.log(error);
-              })
+      .then((value) => {
+        this.sms=value
+        const SEGUI: Segui = {
+          estado: this.estadofin,
+          smsarchivo:this.sms,
+          fecharespuesta:this.today
+        }
+        if (value) {
+          this._seguiService.EditarSeguis(id, SEGUI).subscribe(data => {
+            swal("El tramite fue finalizado", {
+              icon: "success",
+            });
+            this.router.navigate(['hoja-ruta/correspondencia']);
+            this.getSeguiO();
+            this.obtenertotal();
+          }, error => {
+            console.log(error);
+          })
         } else {
-          swal("Ha cancelado la Pre-finalizado del tramite");
+          swal("Ha cancelado la Pre-finalizado del tramite o debe escribir el texto");
         }
       });
-    }
-    }, error => {
-      console.log(error);
-    })
+
   }
   reactivar(id: any) {
-    this._seguiService.obtenerSegui(id).subscribe(data => {
-      this.seguiss = data;
-      this.ids = this.seguiss._id;
-
-    const SEGUI: Segui = {
-      estado: this.estadorec,
-    }
-    if (this.seguiss.estado === "MALETIN") {
-    swal({
-      title: "¿Estás seguro Reactivar????",
-      text: "Esta seguro de reactivar el trámite?????????",
-      icon: "warning",
-      buttons: [true, true],
-      dangerMode: true
-    })
-      .then((willDelete) => {
-        if (willDelete) {
-              this._seguiService.EditarSeguis(this.ids, SEGUI).subscribe(data => {
-                swal("El tramite fue finalizado", {
+      const SEGUI: Segui = {
+        estado: this.estadorec,
+        fecharespuesta:this.datito
+      }
+        swal({
+          title: "¿Estás seguro Reactivar????",
+          text: "Esta seguro de reactivar el trámite?????????",
+          icon: "warning",
+          buttons: [true, true],
+          dangerMode: true
+        })
+          .then((willDelete) => {
+            if (willDelete) {
+              this._seguiService.EditarSeguis(id, SEGUI).subscribe(data => {
+                swal("El tramite fue reactivado", {
                   icon: "success",
                 });
-                console.log(SEGUI);
                 this.router.navigate(['hoja-ruta/correspondencia']);
-
                 this.getSeguiO();
                 this.obtenertotal();
               }, error => {
                 console.log(error);
               })
-        } else {
-          swal("Ha cancelado la finalizacion del tramite");
-        }
-      });
+            } else {
+              swal("Ha cancelado la reacivacion del tramite");
+            }
+          });
+          console.log(this.datito)
+  }
+  reply(id: any) {
+    const SEGUID: Segui = {
+      estado: this.estadorec,
+      fecharespuesta:this.datito
     }
+    this._seguiService.obtenerSegui(id).subscribe(data => {
+      this.seguireply = data;
+      this.nuitreply = this.seguireply.nuit;
+      this._seguiService.buscarnuit(this.nuitreply).subscribe(data => {
+        this.nuitre = data;
+        for (let i = 0; i < this.nuitre.length; i++) {
+          this.res = this.nuitre[i];
+          if (this.res._id === id) {
+            this.idreply = i + 2
+          }
+          if (this.res.estado === "ENVIADO" && this.idreply === this.nuitre.length) {
+
+            swal({
+              title: "¿Estás seguro volver al anterior ACCION???",
+              text: "Esta seguro eliminar lo que has derivado?????????",
+              icon: "warning",
+              buttons: [true, true],
+              dangerMode: true
+            })
+              .then((willDelete) => {
+                if (willDelete) {
+                  this._seguiService.eliminarSegui(this.res._id).subscribe(data => {
+
+                  }, error => {
+                    console.log(error);
+                  }
+                  )
+                  this._seguiService.EditarSeguis(id, SEGUID).subscribe(data => {
+
+                  }, error => {
+                    console.log(error);
+                  })
+                  swal("El tramite se ha restauradado al ultimo accion", {
+                    icon: "success",
+                  });
+                  this.getSeguiO();
+                  this.obtenertotal();
+                } else {
+                  swal("Ha cancelado el proceso");
+                }
+              });
+          } else {
+            swal("Ya fue recibido la derivación motivo que no se puede realizar este acción")
+          }
+        }
+
+      }, error => {
+        console.log(error)
+      })
     }, error => {
       console.log(error);
     })
   }
+  error(valor: string) {
+    this.mostrarError = true;
+    this.textError = valor;
 
+    // Mostramos error por 4 segundos
+    setTimeout(() => {
+      this.mostrarError = false;
+    }, 3000);
+  }
 }

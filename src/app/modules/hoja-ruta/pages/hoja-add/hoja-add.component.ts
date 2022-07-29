@@ -66,8 +66,7 @@ export class HojaAddComponent implements OnInit {
         this.hojaForm.reset();
       })
     } else {
-      //agregar usuario
-      console.log(HOJA);
+      //agregar usuari
       this._hojaService.register(HOJA).subscribe(data => {
         this.router.navigate(['/hoja-ruta/listhr']);
       }, error => {

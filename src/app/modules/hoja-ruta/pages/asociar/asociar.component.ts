@@ -56,7 +56,7 @@ export class AsociarComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    console.log(this.nuit)          
+    console.log(this.nuit)
   }
   loadUser() {
     this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
@@ -90,6 +90,7 @@ export class AsociarComponent implements OnInit {
                           this.cambiarestado(this.idsegui)
                           console.log(this.res.nuit)
                           this.cambiaraso(this.res.nuit)
+                          this.cambiarasos(this.nuit);
                         }, error => {
                           console.log({ error: "no se pudo registrar" });
                           this.hojaForm.reset();
@@ -153,13 +154,25 @@ export class AsociarComponent implements OnInit {
   }
   cambiaraso(id: any) {
     const SEGUI: Segui = {
-      asociado: this.asociado
+      asociado: this.asociado,
+      fecharespuesta:this.today
     }
     this._seguiService.EditarSeguiaso(id,SEGUI).subscribe(data=>{
       console.log("se modifico a true")
     }, error => {
       console.log(error);
     })
+  }
+  cambiarasos(id:any){
+    const SEGUI: Segui = {
+      asociado: this.asociado
+    }
+    this._seguiService.EditarSeguiaso(id,SEGUI).subscribe(data=>{
+      console.log("se modifico a true tambien")
+    }, error => {
+      console.log(error);
+    })
+
   }
 
 }

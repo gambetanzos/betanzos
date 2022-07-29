@@ -29,8 +29,8 @@ export class UsuarioService {
   obtenerUser(id: string): Observable<any> {
     return this._http.get(this.URL + 'users/' + id);
   }
-  obtenerUserEm(email: string): Observable<any> {
-    return this._http.get(this.URL + 'user/' + email);
+  obtenerUserpost(post: string): Observable<any> {
+    return this._http.get(this.URL + 'user/' + post);
   }
 
   eliminarUsuario(id: string): Observable<any> {

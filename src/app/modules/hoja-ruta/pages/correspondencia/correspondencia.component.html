@@ -1,3 +1,6 @@
+<div *ngIf="mostrarError" class="alert alert-dismissible alert-danger">
+  <strong>{{ textError | uppercase  }}</strong>
+</div>
 <div class="container">
   <div class="row">
     <div class="card">
@@ -66,10 +69,18 @@
             </label>
           </div>
         </div>
-        <span class="titulo">LISTA DE SEGUIMIENTO </span>
-        <button class="btn btn-success float-end" routerLink="/hoja-ruta/listhr">
-          VOLVER
-        </button>
+
+
+        <div *ngFor="let seguis of segui" class="">
+          <div  *ngIf="today | amDifference: seguis.fechaderivado :'d'" >
+            <div *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'" class="alert alert-danger alert-dismissible fade show" role="alert">
+             <strong class="d-flex fs-5">Urgente!<span>Debes recibir el documento <i class="fw-bold">{{seguis.nuit}}</i> en el sistema, tanto en fisico en tu ofocina</span> </strong>
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+          <p>{{today | amDifference: seguis.fechaderivado :'d'}}</p>
+        </div>
+
         <div class="form-group m-0">
           <input type="text" class="form-control" name="filterSeg" placeholder="Filtrar por numero Hoja de Ruta" [(ngModel)]="filterSeg">
         </div>
@@ -101,18 +112,20 @@
                 <div  *ngIf="seguis.estado === 'ENVIADO'" class="spinner-grow spinner-grow-sm text-danger" role="status">
                 </div>
                 <i
-                  [routerLink]="null"
-                  class="fas fa-share text-primary"
-                  style="color: rgb(171, 178, 241) !important"
+                  (click)="reply(seguis._id)"
+                  class="fas fa-reply-all text-success"
                   *ngIf="seguis.estado === 'DERIVADO'"
                 ></i>
               </td>
               <td>
-                {{ seguis.nuit }}
+                {{seguis.nuit}}
               </td>
               <td>{{ seguis.origenhr}}</td>
               <td>{{ seguis.referencia}}</td>
-              <td>{{ seguis.detalles }}</td>
+              <td>{{ seguis.detalles }}
+                <br>
+                <p *ngIf="seguis.estado === 'MALETIN'" class="badge badge-warning text-dark">{{seguis.smsarchivo}}</p>
+              </td>
               <td>
                 {{
                   seguis.fechaderivado
@@ -137,11 +150,11 @@
                   </span>
                 </i>
               </td>
-              <td (click)="finalizar(seguis._id)" [ngSwitch]="seguis.estado">
+              <td [ngSwitch]="seguis.estado">
                 <span *ngSwitchCase="'ENVIADO'" class="badge badge-danger">{{
                   seguis.estado
                 }}</span>
-                <span *ngSwitchCase="'RECIBIDO'" class="badge badge-success">{{
+                <span  (click)="finalizar(seguis._id)" *ngSwitchCase="'RECIBIDO'" class="badge badge-success">{{
                   seguis.estado
                 }}
                 <i class="fasre fas fa-file-download ml-0" style="color: rgb(204, 78, 29) !important"></i>
@@ -150,8 +163,7 @@
                   seguis.estado
                 }}</span>
                 <span
-                  *ngSwitchCase="'MALETIN'"
-                  class="badge badge-warning"
+                  *ngSwitchCase="'MALETIN'" class="badge badge-warning"
                   >{{ seguis.estado }}
                 </span>
                 <i (click)="reactivar(seguis._id)"  *ngSwitchCase="'MALETIN'" class="fasre fas fa-file-upload " style="color: rgb(230, 70, 176) !important"></i>
@@ -163,7 +175,7 @@
                   [routerLink]="['/hoja-ruta/seguimiento', seguis.idhj]"
                   class="fas fa-align-justify text-primary"
                 ></i>
-                <i [routerLink]="['/hoja-ruta/list-asociar', seguis.idhj]" *ngIf="seguis.asociado"  class="fas fa-paperclip text-primary" ></i>
+                <i (click)="listaso(seguis.idhj)" *ngIf="seguis.asociado"  class="fas fa-paperclip text-primary" ></i>
               </td>
               <td>
                 <i

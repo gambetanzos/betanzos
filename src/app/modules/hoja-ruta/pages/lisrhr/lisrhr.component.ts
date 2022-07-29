@@ -11,6 +11,10 @@ import { Hojaruta } from '../../models/hojaruta';
   styleUrls: ['./lisrhr.component.css']
 })
 export class LisrhrComponent implements OnInit {
+  //mostrar aso
+  aso: any = [];
+  asonuit: any = {};
+  lisaso: string = " ";
   public identity: any;
   public hojas: any = [];
   public hoja: any = [];
@@ -28,18 +32,18 @@ export class LisrhrComponent implements OnInit {
     private _hojaService: HojarutaService,
     private router: Router
   ) {
-    {
+
       this.loadUser();
       this.loading = false;
-    }
+
   }
 
   ngOnInit(): void {
     this.getHojas();
   }
-  loadUser(){
-    this.identity = JSON.parse(localStorage.getItem('identity')|| '{}');
-   // this.token = JSON.parse(localStorage.getItem('token')|| '{}');
+  loadUser() {
+    this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
+    // this.token = JSON.parse(localStorage.getItem('token')|| '{}');
   }
   getHoja(id: any) {
     this.loading = true;
@@ -90,40 +94,62 @@ export class LisrhrComponent implements OnInit {
         }
       });
   }
+  listaso(id: any) {
+    this._hojaService.obtenerHoja(id).subscribe(data => {
+      this.aso = data.serverResponse.asociado
+      for (let i = 0; i < this.aso.length; i++) {
+        this.asonuit = this.aso[i];
+        this.lisaso = this.lisaso + this.asonuit.nuit + " | "
+      }
+      swal({
+        text: "Al N°"+" "+this.asonuit.nuit,
+        title: "ASOCOADO N°"+" "+this.lisaso,
+        buttons:["Volver", "Ir a Ver"],
+      })
+      .then((enviar) => {
+        if (enviar) {
+          this.router.navigate(['hoja-ruta/list-asociar',id]);
+        }
+      });
+      this.lisaso = ""
+    }, error => {
+      console.log(error);
+    })
+  }
   cambiarestado(id: any) {
     this._hojaService.obtenerHoja(id).subscribe(data => {
       this.hoja = data.serverResponse;
       this.idh = this.hoja._id;
 
-    const HOJA: Hojaruta = {
-      estado: this.estadorec,
-    }
-    if (this.hoja.estado === "REGISTRADO") {
-    swal({
-      title: "¿Estás seguro Recibir???",
-      text: "Esta seguro de reciber el trámite?????????",
-      icon: "warning",
-      buttons: [true, true],
-      dangerMode: true
-    })
-      .then((willDelete) => {
-        if (willDelete) {
+      const HOJA: Hojaruta = {
+        estado: this.estadorec,
+      }
+      if (this.hoja.estado === "REGISTRADO") {
+        swal({
+          title: "¿Estás seguro Recibir???",
+          text: "Esta seguro de recibir el trámite?????????",
+          icon: "warning",
+          buttons: [true, true],
+          dangerMode: true
+        })
+          .then((willDelete) => {
+            if (willDelete) {
               this._hojaService.EditarHoja(this.idh, HOJA).subscribe(data => {
                 swal("El tramite fue recibido", {
                   icon: "success",
                 });
                 console.log(HOJA);
-                this.router.navigate(['/hoja-ruta']);
+                this.router.navigate(['/hoja-ruta/listhr']);
 
                 this.getHojas();
               }, error => {
                 console.log(error);
               })
-        } else {
-          swal("Ha cancelado la finalizacion del tramite");
-        }
-      });
-    }
+            } else {
+              swal("Ha cancelado la finalizacion del tramite");
+            }
+          });
+      }
     }, error => {
       console.log(error);
     })
