@@ -8,12 +8,12 @@ const routes: Routes = [
   {
     path: '',
     children:[
-      {path:'',component:HomepageComponent},
-      {path:'home',component:HomeComponent},
+     // {path:'',component:HomepageComponent},
+      {path:'',component:HomeComponent},
       {path:'work',component:WorkComponent}
     ]
   },
- 
+
 ];
 
 @NgModule({

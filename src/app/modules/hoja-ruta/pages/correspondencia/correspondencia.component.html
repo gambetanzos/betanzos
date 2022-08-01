@@ -72,13 +72,13 @@
 
 
         <div *ngFor="let seguis of segui" class="">
-          <div  *ngIf="today | amDifference: seguis.fechaderivado :'d'" >
+          <div  >
             <div *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'" class="alert alert-danger alert-dismissible fade show" role="alert">
-             <strong class="d-flex fs-5">Urgente!<span>Debes recibir el documento <i class="fw-bold">{{seguis.nuit}}</i> en el sistema, tanto en fisico en tu ofocina</span> </strong>
+             <strong class="d-flex fs-6">Urgente!<span>Debes recibir el documento <i class="fw-bold">{{seguis.nuit}}</i> en el sistema, tanto en fisico en tu ofocina</span> </strong>
              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           </div>
-          <p>{{today | amDifference: seguis.fechaderivado :'d'}}</p>
+          <!--<p>{{today | amDifference: seguis.fechaderivado :'d'}}</p>  *ngIf="today | amDifference: seguis.fechaderivado :'d'"-->
         </div>
 
         <div class="form-group m-0">
