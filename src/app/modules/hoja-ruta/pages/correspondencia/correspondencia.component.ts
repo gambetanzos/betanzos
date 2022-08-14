@@ -6,7 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { SeguimientoService } from '../../services/seguimiento.service';
 import { HojarutaService } from '../../services/hojaruta.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { Segui } from '../../models/seguimiento';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-correspondencia',
@@ -15,8 +17,12 @@ import { Segui } from '../../models/seguimiento';
 })
 export class CorrespondenciaComponent implements OnInit {
   //archivar
+  ale:any={};
+  alerta:boolean=false
+  nombreus:string="";
   sms: string = "";
   datito:any=null;
+  user:any={};
   //mostrar aso
   aso: any = [];
   asonuit: any = {};
@@ -42,6 +48,7 @@ export class CorrespondenciaComponent implements OnInit {
   seguiss: any = [];
   ruta: any[] = [];
   today = new Date();
+  hoy= moment();
   estadorec: string = "RECIBIDO";
   recibido: string = " "
   estadofin: string = "MALETIN";
@@ -64,6 +71,7 @@ export class CorrespondenciaComponent implements OnInit {
     private router: Router,
     private _seguiService: SeguimientoService,
     private _hojaService: HojarutaService,
+    private _userSevice: UsuarioService,
     public _authService: AuthService,
     private aRouter: ActivatedRoute) {
     this.loadUser();
@@ -77,7 +85,6 @@ export class CorrespondenciaComponent implements OnInit {
     this.getHoja();
     this.getSeguiO();
     this.obtenertotal();
-
   }
   loadUser() {
     this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
@@ -111,6 +118,7 @@ export class CorrespondenciaComponent implements OnInit {
 
   obtenertotal() {
     this.loading = true;
+
     let RegExp = /[^()]*/g
     this.destino = this.identity.post;
     let destino1: any = RegExp.exec(this.destino);
@@ -123,6 +131,14 @@ export class CorrespondenciaComponent implements OnInit {
       this.canten = this.seguis.filter(list => list.estado === 'ENVIADO').length;
       this.cantfin = this.seguis.filter(list => list.estado === 'MALETIN').length;
       this.totalarc = this.seguis.filter(list => list.estado === 'ARCHIVADO').length;
+      if(this.canten>0){
+        for(let i=0 ; i < this.seguis.length ; i ++){
+          this.ale=this.seguis[i]
+          if(this.ale.estado==="ENVIADO" && (this.hoy.diff(this.ale.fechaderivado, 'd') > 1)){
+            this.alerta=true;
+          }
+        }
+      }
     }, error => {
       console.log(error);
     })
@@ -158,7 +174,7 @@ export class CorrespondenciaComponent implements OnInit {
         this.lisaso = this.lisaso + this.asonuit.nuit + " | "
       }
       swal({
-        text: "Al N°"+" "+this.asonuit.nuit,
+        //text: "Al N°"+" "+this.aso.nuit,
         title: "ASOCOADO N°"+" "+this.lisaso,
         buttons: ["Volver", "Ir a Ver"]
       })
@@ -168,6 +184,53 @@ export class CorrespondenciaComponent implements OnInit {
           }
         });
       this.lisaso = ""
+    }, error => {
+      console.log(error);
+    })
+  }
+  ver(id: any) {
+    const SEGUI: Segui = {
+      fecharecepcion: this.today,
+      estado: this.estadorec,
+      recibidox: this.identity.username + " " + this.identity.surnames
+    }
+    this._seguiService.obtenerSegui(id).subscribe(data => {
+      this.seguireply = data;
+      this.nuitreply = this.seguireply.nuit;
+      this._seguiService.buscarnuit(this.nuitreply).subscribe(data => {
+        this.nuitre = data;
+        for (let i = 0; i < this.nuitre.length; i++) {
+          if (i===this.nuitre.length-2) {
+            this.res = this.nuitre[i];
+            this._userSevice.obtenerUserpost(this.res.destino).subscribe(data =>{
+              this.user=data.serverResponse
+              this.nombreus=this.user.username + " " + this.user.surnames
+              swal({
+                text: "A cargo de: "+" "+this.nombreus,
+                title: this.res.destino,
+                buttons: ["Volver", "Recibir"]
+              })
+                .then((willDelete) => {
+                  if (willDelete) {
+                    this._seguiService.EditarSeguis(id, SEGUI).subscribe(data => {
+                      this.router.navigate(['hoja-ruta/correspondencia']);
+                      this.getSeguiO();
+                      this.obtenertotal();
+
+                    }, error => {
+                      console.log(error);
+                    })
+                  }
+                 // this.nombreus=""
+                });
+            }, error => {
+              console.log(error)
+            })
+          }
+        }
+      }, error => {
+        console.log(error)
+      })
     }, error => {
       console.log(error);
     })
@@ -303,4 +366,5 @@ export class CorrespondenciaComponent implements OnInit {
       this.mostrarError = false;
     }, 3000);
   }
+
 }

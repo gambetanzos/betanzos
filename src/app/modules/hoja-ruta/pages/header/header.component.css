@@ -1,15 +1,20 @@
+.logo img {
+  width: 150px;
+
+}
 #menu{
   justify-content: center;
-  left: 20px;
-  margin-right: 20px;
+  left: 10px;
+  margin-right: 15px;
+  padding: 0% !important;
 }
 header{
-  margin: 0 0 0 14rem;
   background-color: rgba(10, 190, 235, 0.5);
+  position:sticky;
+  top:0;
+  z-index: 100;
 }
-.container-fluid {
-margin-left: 10% !important;
-}
+
 .dropdown-menu{
 background-color: rgba(54, 151, 216, 0.5);
 }
@@ -18,8 +23,8 @@ background-color: rgba(54, 151, 216, 0.5);
 }
 .user-image {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 .user-image-icon {
   height: 15px;
@@ -27,10 +32,41 @@ background-color: rgba(54, 151, 216, 0.5);
 }
 ul li {
   list-style: none;
+
+  padding: 5px;
 }
 button {
   outline: none;
   border: 0;
   background: transparent;
 }
+
+.side-bar__list {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #ffffff !important;
+  font-size: medium;
+  list-style: none;
+  cursor: pointer;
+}
+.list-wrapper-item {
+  padding: 5px !important;
+}
+
+.side-bar__list:hover {
+  color: #f7f2f5 !important;
+  background-color: #8972e6 !important;
+  border-radius: 5px;
+}
+.list-item-active{
+  color: #f2f5f7 !important;
+  background: #b575d2 !important;
+  border-radius: 5px;
+}
+.list-item-active:hover{
+  color: #36f5f5 !important;
+  background: #3f6fe1 !important;
+  border-radius: 5px;
+}
+
+
 

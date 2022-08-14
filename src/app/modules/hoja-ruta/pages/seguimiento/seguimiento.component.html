@@ -72,16 +72,16 @@
                       </thead>
                       <tbody >
                         <tr *ngFor="let seguis of segui">
-                          <td>
+                          <td *ngIf="id===seguis.idhj">
                             {{ seguis.destino}}
                             <br>
-                            <span *ngIf="seguis.recibidox" class="rec">Recibido por <strong class="badge bg-info text-dark">{{seguis.recibidox}}</strong></span>
+                            <p *ngIf="seguis.recibidox" class="text-capitalize">{{seguis.recibidox}}</p>
                           </td>
-                          <td>{{ seguis.detalles}}
+                          <td *ngIf="id===seguis.idhj">{{ seguis.detalles}}
                             <br>
                             <p *ngIf="seguis.estado === 'MALETIN'" class="badge badge-warning text-dark">{{seguis.smsarchivo}}</p>
                           </td>
-                          <td>
+                          <td *ngIf="id===seguis.idhj">
 
                             <i  [ngClass]= "seguis.fecharecepcion === 'SIN RESEPCIONAR' ? 'badge badge-danger' : '' ">
                               <span *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion}} </span>
@@ -89,24 +89,25 @@
                               <span *ngIf="seguis.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
                             </i>
                           </td>
-                          <td>
+                          <td *ngIf="id===seguis.idhj">
                             <span *ngIf="seguis.fecharespuesta!=null">{{seguis.fecharespuesta  | amDifference: seguis.fechaderivado :'seconds' : true | amDuration:'seconds'}}</span>
                             <span *ngIf="seguis.fecharespuesta==null && seguis.estado==='DERIVADO'">{{seguis.fecharecepcion  | amDifference: seguis.fechaderivado :'seconds' : true | amDuration:'seconds'}}</span>
                             <span *ngIf="seguis.fecharespuesta==null && seguis.estado==='MALETIN'">{{seguis.fecharecepcion  | amDifference: seguis.fechaderivado :'seconds' : true | amDuration:'seconds'}}</span>
                             <samp *ngIf="seguis.estado ==='ENVIADO' || seguis.estado ==='RECIBIDO'">Sin Responder</samp>
                           </td>
-                          <td>
+                          <td *ngIf="id===seguis.idhj">
                               <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocale: 'es' | amTimeAgo}} </span><br>
                               <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
                           </td>
-                          <td [ngSwitch]="seguis.estado">
+                          <td [ngSwitch]="seguis.estado" *ngIf="id===seguis.idhj">
                             <span *ngSwitchCase="'ENVIADO'" class="badge badge-danger">{{ seguis.estado }}</span>
                             <span *ngSwitchCase="'RECIBIDO'" class="badge badge-success">{{ seguis.estado }}</span>
                             <span *ngSwitchCase="'DERIVADO'" class="badge badge-info">{{ seguis.estado }}</span>
                             <span *ngSwitchCase="'MALETIN'" class="badge badge-warning">{{ seguis.estado }}</span>
                             <span *ngIf="seguis.estado != 'DERIVADO' && seguis.estado != 'MALETIN' && seguis.estado != 'RECIBIDO' && seguis.estado != 'ENVIADO'" class="badge badge-secondary text-dark">{{ seguis.estado }}</span>
+                            <br>
+                            <i>{{seguis.copia}}</i>
                           </td>
-                          <td>{{ seguis.origen}}</td>
                           <!--
                           <td>
                               <i [routerLink]="['/seguimiento-add']" class="fas fa-edit text-primary"></i>

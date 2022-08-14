@@ -1,56 +1,230 @@
-<header id="header" class="fixed-top p-0">
+<header id="header" class="">
   <div class="center">
-      <!--MENU-->
-      <nav id="menu"class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid ">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+    <!--MENU-->
+    <nav id="menu" class="navbar navbar-expand-lg navbar-light">
+      <!--LOGO-->
+      <div class="logo">
+        <img src="./assets/img/logogambb.png" class="app-logo" alt="Logotipo" />
+      </div>
+      <div class="container-fluid p-1">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <form #searchForm= "ngForm" (ngSubmit)="goSearch()" class="d-flex">
-              <input name="search"[(ngModel)]="searchString" class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search">
-              <button class="btn btn-outline-primary fa" type="submit" value="Buscar">&#xf002;</button>
-            </form>
-          </div>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul class="navbar-nav me-auto mb-lg-0">
+            <li
+              class="side-bar__list"
+              routerLinkActive="list-item-active"
+              routerLink="/home"
+            >
+              <div class="list-wrapper-item">
+               <!-- <i class="fas fa-home"></i>-->
+                <span class=" ">Inicio</span>
+              </div>
+            </li>
+            <li
+              class="side-bar__list"
+              routerLinkActive="list-item-active"
+              routerLink="/hoja-ruta/dashboard"
+              *ngIf="
+                (identity && identity.roles === 'SUPER_ADMIN') ||
+                identity.roles === 'SECRETARIA' ||
+                identity.roles === 'SUPER_USER' ||
+                identity.roles === 'USER' ||
+                identity.roles === 'ADMIN'
+              "
+            >
+              <div class="list-wrapper-item">
+               <!--<i class="fa fa-dashboard"></i>-->
+                <span class=" ">Panel de Control</span>
+              </div>
+            </li>
+            <li
+              class="side-bar__list"
+              routerLinkActive="list-item-active"
+              routerLink="/hoja-ruta/correspondencia"
+              *ngIf="
+                (identity && identity.roles === 'SUPER_ADMIN') ||
+                identity.roles === 'SECRETARIA' ||
+                identity.roles === 'SUPER_USER' ||
+                identity.roles === 'USER' ||
+                identity.roles === 'ADMIN'
+              "
+            >
+              <div class="list-wrapper-item">
+               <!-- <i class="fas fa-clipboard"></i>-->
+                <span class=" ">Mi Oficina</span>
+              </div>
+            </li>
+            <li
+              class="side-bar__list"
+              routerLinkActive="list-item-active"
+              routerLink="/hoja-ruta/listhr"
+              *ngIf="
+                (identity && identity.roles === 'SUPER_ADMIN') ||
+                identity.roles === 'SECRETARIA' ||
+                identity.roles === 'SUPER_USER' ||
+                identity.roles === 'USER' ||
+                identity.roles === 'ADMIN'
+              "
+            >
+              <div class="list-wrapper-item">
+               <!-- <i class="fas fa-directions"></i>-->
+                <span class=" ">Hoja de Ruta</span>
+              </div>
+            </li>
+            <li
+              class="side-bar__list"
+              routerLinkActive="list-item-active"
+              routerLink="/work"
+              *ngIf="
+                (identity && identity.roles === 'SUPER_ADMIN') ||
+                identity.roles === 'SECRETARIA' ||
+                identity.roles === 'SUPER_USER' ||
+                identity.roles === 'USER' ||
+                identity.roles === 'ADMIN'
+              "
+            >
+              <div class="list-wrapper-item">
+               <!-- <i class="fas fa-line-chart"></i>-->
+                <span class=" ">Reportes</span>
+              </div>
+            </li>
+            <li *ngIf="identity && identity.roles === 'SUPER_ADMIN'" class=" dropdown side-bar__list">
+              <div class="  dropdown-toggle list-wrapper-item"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                 <span class=" ">Admin</span>
+               </div>
 
-          <div class="d-flex justify-content-end">
-            <ul class=" d-flex nabar-nav nabar-right mt-1" *ngIf="!_authService.loggedIn()">
-              <li class="nav-item activate">
-                <a class="nav-link " [routerLink]="['/hoja-ruta/login']"> LOGIN</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/work']"> REGISTRO </a>
-              </li>
-            </ul>
-            <ul class="row m-0 align-items-center" *ngIf="identity && identity.email">
-              <li  class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle fs-6" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false ">
-                  <img src="./assets/img/user.png" alt="" class="user-image mr-1 p-1" />
-                  {{identity.username}} {{identity.surnames}}
-                </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li  routerLinkActive="list-item-active" routerLink="/hoja-ruta/usuarios" ><span class=" ">Usuarios</span></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li routerLinkActive="list-item-active" routerLink="/hoja-ruta/organizacion"><span class=" ">Organizacion</span></li>
+              </ul>
+            </li>
+            <li class=" dropdown side-bar__list">
+              <div class="  dropdown-toggle list-wrapper-item"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                 <span class=" ">Oficina Virtual</span>
+               </div>
 
-                <div class="dropdown-menu">
-                  <a [routerLink]="['/work', identity.email]" class="dropdown-item">
-                    <i class="fas fa-user-cog text-primary"></i> Mi Perfíl
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a routerLink="/work" class="dropdown-item">
-                    <i class="fas fa-cog text-primary"></i> Configuración
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a  class="dropdown-item">
-                    <button >
-                    <i class="fas fa-arrow-right text-primary" (click)="[_authService.logout()]">   Cerrar Sesión</i>
-                  </button>
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="/hoja-ruta">HOJA DE RUTA</a>
+                </li>
+                <li><a class="dropdown-item" href="/work">ALMACENES</a></li>
+                <li><a class="dropdown-item" href="/work">ARCHIVOS</a></li>
+                <li><a class="dropdown-item" href="/work">CEMENTERIO</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="/work">RR.HH.</a></li>
+                <li><a class="dropdown-item" href="/work">CONVENIOS</a></li>
+                <li>
+                  <a class="dropdown-item" href="/work">INVERSION PUBLICA</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/work">CORRESPONDENCIA</a>
+                </li>
+                <li><a class="dropdown-item" href="/work">CITES</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form #searchForm="ngForm" (ngSubmit)="goSearch()" class="d-flex">
+            <input
+              name="search"
+              [(ngModel)]="searchString"
+              class="form-control p-0"
+              type="search"
+              placeholder=" Buscar..."
+              aria-label="Search"
+
+            />
+            <button
+              class="btn btn-outline-primary fa mr-1"
+              type="submit"
+              value="Buscar"
+            >
+              &#xf002;
+            </button>
+          </form>
         </div>
-      </nav>
-      <!--LIMPIAR FLOTADOS-->
-      <div class="clearfix"></div>
+
+        <div class="d-flex justify-content-end p-0">
+          <ul
+            class="d-flex nabar-nav nabar-right mt-1 p-0"
+            *ngIf="!_authService.loggedIn()"
+          >
+            <li class="nav-item activate">
+              <a class="nav-link" [routerLink]="['/hoja-ruta/login']"> LOGIN</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/work']"> REGISTRO </a>
+            </li>
+          </ul>
+          <ul
+            class="row m-0 p-0 align-items-center"
+            *ngIf="identity && identity.email"
+          >
+            <li class="nav-item dropdown p-0">
+              <a
+                href="#"
+                class="nav-link dropdown-toggle p-0"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false "
+              >
+                <img
+                  src="./assets/img/user.png"
+                  alt=""
+                  class="user-image mr-1 p-1"
+                />
+                {{ identity.username }} {{ identity.surnames }}
+              </a>
+
+              <div class="dropdown-menu">
+                <a
+                  [routerLink]="['/work', identity.email]"
+                  class="dropdown-item"
+                >
+                  <i class="fas fa-user-cog text-primary"></i> Mi Perfíl
+                </a>
+                <div class="dropdown-divider"></div>
+                <a routerLink="/work" class="dropdown-item">
+                  <i class="fas fa-cog text-primary"></i> Configuración
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item">
+                  <button>
+                    <i
+                      class="fas fa-arrow-right text-primary"
+                      (click)="[_authService.logout()]"
+                    >
+                      Cerrar Sesión</i
+                    >
+                  </button>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--LIMPIAR FLOTADOS-->
+    <div class="clearfix"></div>
   </div>
 </header>

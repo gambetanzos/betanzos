@@ -101,9 +101,4 @@ export class HojaAddComponent implements OnInit {
       console.log(error);
     })
   }
-
-  imprimir(){
-
-  }
-
 }

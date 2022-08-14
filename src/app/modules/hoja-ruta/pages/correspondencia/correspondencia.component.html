@@ -1,130 +1,239 @@
 <div *ngIf="mostrarError" class="alert alert-dismissible alert-danger">
-  <strong>{{ textError | uppercase  }}</strong>
+  <strong>{{ textError | uppercase }}</strong>
 </div>
-<div class="container">
+<div class="container pt-2">
   <div class="row">
     <div class="card">
       <div class="card-body text-center">
-
-        <div class=" card-body float-start p-0">
+        <div class="card-body float-start p-0 mt-1">
           <div class="form-check form-check-inline mr-4">
-            <input class="form-check-input mr-0" [(ngModel)]="radioButtonSeleccionado"
-               type="radio" name="estado" id="todos" value="Todos" >
-            <label class="form-check-label badge badge-secondary text-dark" for="todos">Todos
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary text-dark">
-                {{total}}
+            <input
+              class="form-check-input mr-0"
+              [(ngModel)]="radioButtonSeleccionado"
+              type="radio"
+              name="estado"
+              id="todos"
+              value="Todos"
+            />
+            <label
+              class="form-check-label badge badge-secondary text-dark"
+              for="todos"
+              >Todos
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary text-dark"
+              >
+                {{ total }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </label>
           </div>
           <div class="form-check form-check-inline mr-4">
-            <input class="form-check-input mr-0" [(ngModel)]="radioButtonSeleccionado"
-                type="radio" name="estado" id="derivado" value="DERIVADO" >
-            <label class="form-check-label badge badge-info" for="derivado">Derivados
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-info">
-                {{cantder}}
+            <input
+              class="form-check-input mr-0"
+              [(ngModel)]="radioButtonSeleccionado"
+              type="radio"
+              name="estado"
+              id="derivado"
+              value="DERIVADO"
+            />
+            <label class="form-check-label badge badge-info" for="derivado"
+              >Derivados
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-info"
+              >
+                {{ cantder }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </label>
           </div>
-          <div class="form-check form-check-inline  mr-4">
-            <input class="form-check-input mr-0" [(ngModel)]="radioButtonSeleccionado"
-              type="radio" name="estado" id="recibido" value="RECIBIDO">
-            <label class="form-check-label badge badge-success" for="recibido">Recibidos
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-success">
-                {{cantrec}}
+          <div class="form-check form-check-inline mr-4">
+            <input
+              class="form-check-input mr-0"
+              [(ngModel)]="radioButtonSeleccionado"
+              type="radio"
+              name="estado"
+              id="recibido"
+              value="RECIBIDO"
+            />
+            <label class="form-check-label badge badge-success" for="recibido"
+              >Recibidos
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-success"
+              >
+                {{ cantrec }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </label>
           </div>
-          <div class="form-check form-check-inline  mr-4">
-            <input class="form-check-input mr-0"  [(ngModel)]="radioButtonSeleccionado"
-              type="radio" name="estado" id="sinrecibir" value="ENVIADO">
-            <label class="form-check-label badge badge-danger" for="sinrecibir">Sin Recibir
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
-                {{canten}}
+          <div class="form-check form-check-inline mr-4">
+            <input
+              class="form-check-input mr-0"
+              [(ngModel)]="radioButtonSeleccionado"
+              type="radio"
+              name="estado"
+              id="sinrecibir"
+              value="ENVIADO"
+            />
+            <label class="form-check-label badge badge-danger" for="sinrecibir"
+              >Sin Recibir
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger"
+              >
+                {{ canten }}
                 <span class="visually-hidden">unread messages</span>
               </span>
-              <div *ngIf="canten > 0 " class="spinner-grow spinner-grow-sm text-danger" style="color: rgb(200, 248, 6) !important" role="status"></div>
+              <div
+                *ngIf="canten > 0"
+                class="spinner-grow spinner-grow-sm text-danger"
+                style="color: rgb(200, 248, 6) !important"
+                role="status"
+              ></div>
             </label>
           </div>
-          <div class="form-check form-check-inline  mr-4">
-            <input class="form-check-input mr-0" [(ngModel)]="radioButtonSeleccionado"
-              type="radio" name="estado" id="maletin" value="MALETIN">
-          <label class="form-check-label badge badge-warning " for="maletin">Mi Maletin
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-warning ">
-                {{cantfin}}
+          <div class="form-check form-check-inline mr-4">
+            <input
+              class="form-check-input mr-0"
+              [(ngModel)]="radioButtonSeleccionado"
+              type="radio"
+              name="estado"
+              id="maletin"
+              value="MALETIN"
+            />
+            <label class="form-check-label badge badge-warning" for="maletin"
+              >Mi Maletin
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-warning"
+              >
+                {{ cantfin }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </label>
           </div>
-          <div class="form-check form-check-inline  mr-4">
-            <input class="form-check-input mr-0" [(ngModel)]="radioButtonSeleccionado"
-              type="radio" name="estado" id="archivado" value="ARCHIVADO">
-            <label class="form-check-label badge badge-primary " for="archivado">Archivo Central
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-primary ">
-                {{totalarc}}
+          <div class="form-check form-check-inline mr-4">
+            <input
+              class="form-check-input mr-0"
+              [(ngModel)]="radioButtonSeleccionado"
+              type="radio"
+              name="estado"
+              id="archivado"
+              value="ARCHIVADO"
+            />
+            <label class="form-check-label badge badge-primary" for="archivado"
+              >Archivo Central
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-primary"
+              >
+                {{ totalarc }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </label>
           </div>
         </div>
-
-
-        <div *ngFor="let seguis of segui" class="">
-          <div  >
-            <div *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'" class="alert alert-danger alert-dismissible fade show" role="alert">
-             <strong class="d-flex fs-6">Urgente!<span>Debes recibir el documento <i class="fw-bold">{{seguis.nuit}}</i> en el sistema, tanto en fisico en tu ofocina</span> </strong>
-             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div *ngIf="alerta" class="aler pt-5 alert alert-dismissible" >
+          <button *ngIf="!loading"
+                  type="button"
+                  class="btn-close btnale"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+          <div *ngFor="let seguis of segui" class="alerta ">
+            <div *ngIf="(today | amDifference: seguis.fechaderivado:'d') >= 1">
+              <div
+                *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'"
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+              >
+                <strong class="d-flex fs-6"
+                  ><span
+                    >Reciba el documento
+                    <i class="fw-bold">{{ seguis.nuit }}</i> si no ha sido entregado fisicamente a su persona, comunicarse con
+                    <i (click)="ver(seguis._id)" class="fas fa-eye badge badge-info"> VER </i>
+                    <i
+                      (click)="cambiarestado(seguis._id)"
+                      class="badge badge-danger"
+                    >
+                      Recibir
+                    </i></span
+                  >
+                </strong>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
             </div>
           </div>
-          <!--<p>{{today | amDifference: seguis.fechaderivado :'d'}}</p>  *ngIf="today | amDifference: seguis.fechaderivado :'d'"-->
         </div>
-
         <div class="form-group m-0">
-          <input type="text" class="form-control" name="filterSeg" placeholder="Filtrar por numero Hoja de Ruta" [(ngModel)]="filterSeg">
+          <input
+            type="text"
+            class="form-control"
+            name="filterSeg"
+            placeholder="Filtrar por numero Hoja de Ruta"
+            [(ngModel)]="filterSeg"
+          />
         </div>
         <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">Derivar</th>
-              <th scope="col">N°</th>
+              <th scope="col">NumeroHR</th>
+              <th scope="col">Derivado por</th>
               <th scope="col">Origen</th>
               <th scope="col">Referencia</th>
-              <th scope="col">Detalle de Instrucción</th>
+              <th scope="col">Instrucción</th>
               <th scope="col">Fecha Derivado</th>
               <th scope="col">Fecha Recepcion</th>
               <th scope="col">Estado</th>
-              <th scope="col">Seguimiento</th>
+              <th scope="col">Seguim.</th>
               <th scope="col">Adjunto</th>
               <!--     <th scope="col">Aciones</th> -->
             </tr>
           </thead>
 
-          <tbody *ngFor="let seguis of segui| filter:filterSeg ">
-            <tr *ngIf="radioButtonSeleccionado == 'Todos' || radioButtonSeleccionado == seguis.estado">
+          <tbody *ngFor="let seguis of segui | filter: filterSeg">
+            <tr
+              *ngIf="
+                radioButtonSeleccionado == 'Todos' ||
+                radioButtonSeleccionado == seguis.estado
+              "
+            >
               <td>
                 <i
-                  [routerLink]="['/hoja-ruta/seguimiento-add', seguis.idhj, seguis._id]"
+                  [routerLink]="[
+                    '/hoja-ruta/seguimiento-add',
+                    seguis.idhj,
+                    seguis._id
+                  ]"
                   class="fas fa-share text-primary"
                   *ngIf="seguis.estado === 'RECIBIDO'"
                 ></i>
-                <div  *ngIf="seguis.estado === 'ENVIADO'" class="spinner-grow spinner-grow-sm text-danger" role="status">
-                </div>
                 <i
                   (click)="reply(seguis._id)"
                   class="fas fa-reply-all text-success"
                   *ngIf="seguis.estado === 'DERIVADO'"
                 ></i>
+                <i *ngIf="seguis.estado=='RECIBIDO'" class="fas fa-briefcase " (click)="finalizar(seguis._id)" style="color: rgb(189, 109, 4) !important"></i>
               </td>
+
               <td>
-                {{seguis.nuit}}
+                {{ seguis.nuit }}
+                <i>{{seguis.copia}}</i>
               </td>
-              <td>{{ seguis.origenhr}}</td>
-              <td>{{ seguis.referencia}}</td>
-              <td>{{ seguis.detalles }}
-                <br>
-                <p *ngIf="seguis.estado === 'MALETIN'" class="badge badge-warning text-dark">{{seguis.smsarchivo}}</p>
+              <td>{{seguis.oficina}}</td>
+              <td>{{ seguis.origenhr }}</td>
+              <td>{{ seguis.referencia }}</td>
+              <td>
+                {{ seguis.detalles }}
+                <br />
+                <p
+                  *ngIf="seguis.estado === 'MALETIN'"
+                  class="badge badge-warning text-dark"
+                >
+                  {{ seguis.smsarchivo }}
+                </p>
               </td>
               <td>
                 {{
@@ -154,28 +263,50 @@
                 <span *ngSwitchCase="'ENVIADO'" class="badge badge-danger">{{
                   seguis.estado
                 }}</span>
-                <span  (click)="finalizar(seguis._id)" *ngSwitchCase="'RECIBIDO'" class="badge badge-success">{{
-                  seguis.estado
-                }}
-                <i class="fasre fas fa-file-download ml-0" style="color: rgb(204, 78, 29) !important"></i>
-                </span>
+                <span
+                  *ngSwitchCase="'RECIBIDO'"
+                  class="badge badge-success"
+                  >{{ seguis.estado }}
+              </span>
                 <span *ngSwitchCase="'DERIVADO'" class="badge badge-info">{{
                   seguis.estado
                 }}</span>
-                <span
-                  *ngSwitchCase="'MALETIN'" class="badge badge-warning"
+                <span *ngSwitchCase="'MALETIN'" class="badge badge-warning"
                   >{{ seguis.estado }}
                 </span>
-                <i (click)="reactivar(seguis._id)"  *ngSwitchCase="'MALETIN'" class="fasre fas fa-file-upload " style="color: rgb(230, 70, 176) !important"></i>
-                <i *ngSwitchCase="'MALETIN'" class="fasar fas fa-folder-minus p-0 mt-0" style="color: rgb(3, 126, 40) !important"></i>
-                <span *ngIf="seguis.estado != 'DERIVADO' && seguis.estado != 'MALETIN' && seguis.estado != 'RECIBIDO' && seguis.estado != 'ENVIADO'" class="badge badge-secondary text-dark">{{ seguis.estado }}</span>
+                <i
+                  (click)="reactivar(seguis._id)"
+                  *ngSwitchCase="'MALETIN'"
+                  class="fasre fas fa-file-upload"
+                  style="color: rgb(230, 70, 176) !important"
+                ></i>
+                <i
+                  *ngSwitchCase="'MALETIN'"
+                  class="fasar fas fa-folder-minus p-0 mt-0"
+                  style="color: rgb(3, 126, 40) !important"
+                ></i>
+                <span
+                  *ngIf="
+                    seguis.estado != 'DERIVADO' &&
+                    seguis.estado != 'MALETIN' &&
+                    seguis.estado != 'RECIBIDO' &&
+                    seguis.estado != 'ENVIADO'
+                  "
+                  class="badge badge-secondary text-dark"
+                  >{{ seguis.estado }}</span
+                >
               </td>
               <td>
                 <i
                   [routerLink]="['/hoja-ruta/seguimiento', seguis.idhj]"
                   class="fas fa-align-justify text-primary"
                 ></i>
-                <i (click)="listaso(seguis.idhj)" *ngIf="seguis.asociado"  class="fas fa-paperclip text-primary" ></i>
+                <i
+                  (click)="listaso(seguis.idhj)"
+                  *ngIf="seguis.asociado"
+                  class="badge badge-success text-dark p-1"
+                  style="color: rgb(29, 14, 248) !important"
+                >Asociados</i>
               </td>
               <td>
                 <i

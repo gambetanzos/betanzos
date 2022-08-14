@@ -12,6 +12,7 @@ import { SubdirService } from '../../services/subdir.service';
 import { Segui } from '../../models/seguimiento';
 import { SeguimientoService } from '../../services/seguimiento.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { disableDebugTools } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-seguimiento-add',
@@ -19,17 +20,34 @@ import { UsuarioService } from '../../services/usuario.service';
   styleUrls: ['./seguimiento-add.component.css']
 })
 export class SeguimientoAddComponent implements OnInit {
+//copias
+formularioIncorrecto = false;
+
+
+public orgc: Organizacion[] = [];
+  copy:string="";
+  seg:any=[];
+  catco:number=0;
+  cant:number=0
+  copia:boolean=false;
+  paramsc:string="";
   public identity: any;
   subscription: Subscription = new Subscription;
   params = "";
   params2 = "";
+  params2c = "";
+  detallesc="";
   flac: string = "";
   mostrarError: boolean;
   textError: string;
+  mostrarError1: boolean;
+  textError1: string;
   user: any = [];
+  userc: any = [];
   orgselec: any[] = [];
+  orgseleco: any[] = [];
   public org: Organizacion[] = [];
-  public segui: Segui[] = [];
+  segui: any = [];
   seguiForm: FormGroup;
   titulo = 'derivar documento';
   id: string | null;
@@ -43,6 +61,10 @@ export class SeguimientoAddComponent implements OnInit {
   idnuit: string = "";
   ref: string = "";
   orhr: string = "";
+  copi:string = "";
+  asoc:boolean=false;
+  oficina:string="";
+  nombre:string="";
   origenreg: string = "REGISTRADO";
   constructor(private fb: FormBuilder,
     private _hojaService: HojarutaService,
@@ -55,17 +77,17 @@ export class SeguimientoAddComponent implements OnInit {
     private aRouter: ActivatedRoute) {
     this.seguiForm = this.fb.group({
       destino: ['', Validators.required],
-      detalles: ['', Validators.required],
-      instrucciones: [''],
-      //fecharecepcion: ['', Validators.required],
-      //estado: ['', Validators.required],
-      //post: ['', Validators.required],
+      detalles: ['', Validators.required]
+
     })
     this.id = this.aRouter.snapshot.paramMap.get('id');
     this.ids = this.aRouter.snapshot.paramMap.get('ids');
     this.loadUser();
     this.mostrarError = false;
     this.textError = '';
+    this.mostrarError1 = false;
+    this.textError1 = '';
+
   }
   loadUser() {
     this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
@@ -75,6 +97,7 @@ export class SeguimientoAddComponent implements OnInit {
     this.getOrga();
     this.getNuit();
     this.getSub();
+    this.getSegui();
   }
   getuser() {
     if (this.params !== null) {
@@ -88,12 +111,28 @@ export class SeguimientoAddComponent implements OnInit {
       })
     }
   }
+  getuserc() {
+    if (this.paramsc !== null) {
+      this.subscription = this._userService.obtenerUserpost(this.paramsc).subscribe(data => {
+        this.userc = data.serverResponse;
+        this.params2c = this.userc.post
+        if (this.params2c === this.identity.post) {
+          this.flac = "si"
+        } else
+          this.flac = "no"
+      })
+    }
+  }
 
   registerSegui() {
     const SEGUI: Segui = {
       nuit: this.idnuit,
       referencia: this.ref,
       origenhr: this.orhr,
+      copia:this.copi,
+      asociado:this.asoc,
+      oficina:this.oficina,
+      nombre:this.nombre,
       destino: this.seguiForm.get('destino')?.value,
       detalles: this.seguiForm.get('detalles')?.value
     }
@@ -104,7 +143,6 @@ export class SeguimientoAddComponent implements OnInit {
       estado: this.origendev,
       fecharespuesta:this.today
     }
-
     if (this.id !== null && this.flac === "no") {
       this._seguiService.EditarSegui(this.id, SEGUI).subscribe(data => {
         this.router.navigate(['/hoja-ruta/correspondencia']);
@@ -114,6 +152,7 @@ export class SeguimientoAddComponent implements OnInit {
             console.log(error);
           })
         }
+        console.log(SEGUI)
       }, error => {
         console.log(error);
         this.seguiForm.reset();
@@ -143,12 +182,29 @@ export class SeguimientoAddComponent implements OnInit {
       console.log(error);
     })
   }
+  getOrgac() {
+      this._orgService.getOrg().subscribe(data => {
+      this.orgc = data;
+
+    }, error => {
+      console.log(error);
+    })
+  }
   getSub() {
 
     if (this.params !== null) {
       this.subscription = this._orgService.obtenerOrg(this.params).subscribe(data => {
         this.orgselec = data.subdirecciones;
 
+      }, error => {
+        console.log(error);
+      })
+    }
+  }
+  getSubc() {
+    if (this.paramsc !== null) {
+      this.subscription = this._orgService.obtenerOrg(this.paramsc).subscribe(data => {
+        this.orgseleco = data.subdirecciones;
       }, error => {
         console.log(error);
       })
@@ -166,17 +222,19 @@ export class SeguimientoAddComponent implements OnInit {
       })
     }
   }
-  instruccions: any[] = [
-    { value: 'Remita informe ', nombre: 'Remita informe ' },
-    { value: 'Dar el curso al trámite', nombre: 'Dar el curso al trámite' },
-    { value: 'Supervisé', nombre: 'Supervisé' },
-    { value: 'Proceda a su registro', nombre: 'Proceda a su registro' },
-    { value: 'Prepare el documento', nombre: 'Prepare el documento' },
-    { value: 'Revíse', nombre: 'Revíse' },
-    { value: 'Resuelva', nombre: 'Resuelva' },
-    { value: 'Para su conocimiento', nombre: 'Para su conocimiento' },
-    { value: 'Otros', nombre: 'Otros' },
-  ]
+  getSegui() {
+    if (this.ids !== null) {
+      this._seguiService.obtenerSegui(this.ids).subscribe(data => {
+        this.segui = data;
+        this.copi = this.segui.copia;
+        this.asoc = this.segui.asociado;
+        this.oficina=this.segui.destino;
+        //  this.nombre=this.segui.nombre;
+      }, error => {
+        console.log(error);
+      })
+    }
+  }
   error(valor: string) {
     this.mostrarError = true;
     this.textError = valor;
@@ -185,5 +243,75 @@ export class SeguimientoAddComponent implements OnInit {
     setTimeout(() => {
       this.mostrarError = false;
     }, 4000);
+  }
+  error1(valor: string) {
+    this.mostrarError1 = true;
+    this.textError1 = valor;
+
+    // Mostramos error por 4 segundos
+    setTimeout(() => {
+      this.mostrarError1 = false;
+    }, 4000);
+  }
+  copias(): void {
+    this.getOrgac();
+    this.getSubc()
+    this.getuserc()
+    this._seguiService.buscarnuit(this.idnuit).subscribe(data => {
+      this.seg=data
+      this.catco = this.seg.filter((list: { copia: string; }) => list.copia).length;
+      this.cant=this.catco+1
+    }, error => {
+      console.log(error)
+    })
+  }
+  cerrar(): void {
+    this.copia=false
+    this.resetCampos()
+  }
+  agregarCita() {
+    if(this.paramsc == '' || this.detallesc == ''){
+      this.error1('todos los campos deben ser llenados');
+      return;
+    }
+    this.formularioIncorrecto = false;
+    this._seguiService.buscarnuit(this.idnuit).subscribe(data => {
+      this.seg=data
+      this.catco = this.seg.filter((list: { copia: string; }) => list.copia).length;
+      console.log(this.catco)
+      this.cant=this.catco+1
+      this.copy="copia"+this.cant
+      // Creamos objeto para enviarselo al padre
+    const SEGUIC: Segui = {
+      nuit: this.idnuit,
+      referencia: this.ref,
+      origenhr: this.orhr,
+      destino:  this.paramsc,
+      detalles: this.detallesc,
+      copia:this.copy,
+      oficina:this.oficina,
+      nombre:this.nombre
+    }
+    if (this.id !== null && this.flac === "no") {
+      this._seguiService.EditarSegui(this.id, SEGUIC).subscribe(data => {
+      }, error => {
+        console.log(error);
+      })
+    }
+    else {
+      this.error1('No se puede derivar a su propia oficina');
+      return;
+    }
+    this.resetCampos();
+    this.copias();
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  resetCampos() {
+    this.detallesc = '';
+    this.paramsc = '';
+    this.params2c = '';
   }
 }
