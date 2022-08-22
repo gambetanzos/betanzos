@@ -44,6 +44,7 @@ public orgc: Organizacion[] = [];
   textError1: string;
   user: any = [];
   userc: any = [];
+  users: any = [];
   orgselec: any[] = [];
   orgseleco: any[] = [];
   public org: Organizacion[] = [];
@@ -229,6 +230,15 @@ public orgc: Organizacion[] = [];
         this.copi = this.segui.copia;
         this.asoc = this.segui.asociado;
         this.oficina=this.segui.destino;
+        this._userService.obtenerUserpost(this.oficina).subscribe(data =>{
+          let RegExp = /[^()]*/g
+          this.users=data.serverResponse;
+          console.log(this.users)
+          this.nombre=this.users.username+" "+this.users.surnames
+          console.log(this.nombre)
+        }, error => {
+        console.log(error);
+      })
         //  this.nombre=this.segui.nombre;
       }, error => {
         console.log(error);

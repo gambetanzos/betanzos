@@ -70,12 +70,23 @@
               routerLinkActive="list-item-active"
               routerLink="/hoja-ruta/listhr"
               *ngIf="
-                (identity && identity.roles === 'SUPER_ADMIN') ||
-                identity.roles === 'SECRETARIA' ||
-                identity.roles === 'SUPER_USER' ||
+                (identity && identity.roles === 'SUPER_USER') ||
                 identity.roles === 'USER' ||
                 identity.roles === 'ADMIN'
               "
+            >
+              <div class="list-wrapper-item">
+               <!-- <i class="fas fa-directions"></i>-->
+                <span class=" ">Asociar</span>
+              </div>
+            </li>
+            <li
+              class="side-bar__list"
+              routerLinkActive="list-item-active"
+              routerLink="/hoja-ruta/listhr"
+              *ngIf="
+                (identity && identity.roles === 'SUPER_ADMIN') ||
+                identity.roles === 'SECRETARIA'"
             >
               <div class="list-wrapper-item">
                <!-- <i class="fas fa-directions"></i>-->
@@ -125,7 +136,7 @@
 
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a class="dropdown-item" href="/hoja-ruta">HOJA DE RUTA</a>
+                  <a class="dropdown-item" href="/hoja-ruta/dashboard">HOJA DE RUTA</a>
                 </li>
                 <li><a class="dropdown-item" href="/work">ALMACENES</a></li>
                 <li><a class="dropdown-item" href="/work">ARCHIVOS</a></li>
@@ -165,7 +176,7 @@
 
         <div class="d-flex justify-content-end p-0">
           <ul
-            class="d-flex nabar-nav nabar-right mt-1 p-0"
+            class="d-flex nabar-nav nabar-right mt-1 p-0 mb-0"
             *ngIf="!_authService.loggedIn()"
           >
             <li class="nav-item activate">

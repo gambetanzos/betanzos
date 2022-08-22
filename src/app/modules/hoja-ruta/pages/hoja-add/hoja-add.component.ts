@@ -94,9 +94,7 @@ export class HojaAddComponent implements OnInit {
   }
   getHojas() {
     this._hojaService.getHojas().subscribe(data => {
-
       this.cant = data.serverResponse.length
-
     }, error => {
       console.log(error);
     })

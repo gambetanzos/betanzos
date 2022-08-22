@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HojarutaService } from '../../services/hojaruta.service';
 import { Hojaruta } from '../../models/hojaruta';
+import { SeguimientoService } from '../../services/seguimiento.service';
 
 @Component({
   selector: 'app-lisrhr',
@@ -11,10 +15,21 @@ import { Hojaruta } from '../../models/hojaruta';
   styleUrls: ['./lisrhr.component.css']
 })
 export class LisrhrComponent implements OnInit {
+   //modal reguister
+   canth: string = "";
+   totalh: string = "";
+   ceros: string = "0";
+   hojaForm: FormGroup;
+   titulo = 'GENERAR HOJA DE RUTA';
+  //
+  seguim: any = [];
+  rutas: any = [];
+  idhr:string="";
   //mostrar aso
   aso: any = [];
   asonuit: any = {};
   lisaso: string = " ";
+  today = new Date();
   public identity: any;
   public hojas: any = [];
   public hoja: any = [];
@@ -28,10 +43,19 @@ export class LisrhrComponent implements OnInit {
   estadoenv: string = 'ENVIADO';
   pageActual: number = 1;
 
-  constructor(public _authService: AuthService,
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    public _authService: AuthService,
+    private _seguiService: SeguimientoService,
     private _hojaService: HojarutaService,
-    private router: Router
   ) {
+    this.hojaForm = this.fb.group({
+      origen: ['', Validators.required],
+      referencia: ['', Validators.required],
+      fechadocumento: ['', Validators.required],
+      tipodoc: [''],
+      contacto: ['']
+    })
 
       this.loadUser();
       this.loading = false;
@@ -44,6 +68,26 @@ export class LisrhrComponent implements OnInit {
   loadUser() {
     this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
     // this.token = JSON.parse(localStorage.getItem('token')|| '{}');
+  }
+  registerHojas() {
+    this.cant= this.cant+1
+    this.totalh= this.cant+"-22";
+    const HOJA: Hojaruta = {
+      origen: this.hojaForm.get('origen')?.value,
+      tipodoc: this.hojaForm.get('tipodoc')?.value,
+      contacto: this.hojaForm.get('contacto')?.value,
+      referencia: this.hojaForm.get('referencia')?.value,
+      fechadocumento: this.hojaForm.get('fechadocumento')?.value,
+      nuit:this.totalh
+    }
+    this._hojaService.register(HOJA).subscribe(data => {
+      //this.router.navigate(['/hoja-ruta/listhr']);
+      this.hojaForm.reset();
+      this.getHojas();
+    }, error => {
+      console.log(error);
+      
+    })
   }
   getHoja(id: any) {
     this.loading = true;
@@ -61,6 +105,7 @@ export class LisrhrComponent implements OnInit {
     this._hojaService.getHojas().subscribe(data => {
       this.loading = false;
       this.hojas = data.serverResponse;
+      this.cant = data.serverResponse.length
     }, error => {
       this.loading = false;
       console.log(error);
@@ -154,4 +199,122 @@ export class LisrhrComponent implements OnInit {
       console.log(error);
     })
   }
+  seguimi(idh: any) {
+    this.loading = true;
+    this.idhr=idh
+    this._hojaService.obtenerHoja(idh).subscribe(data => {
+      this.loading = false;
+      this.rutas = data.serverResponse;
+      this._seguiService.buscarnuit(this.rutas.nuit).subscribe(data => {
+        this.seguim = data;
+      }, error => {
+        console.log(error);
+      })
+    }, error => {
+      console.log(error);
+    })
+}
+
+ImprimirPDF() {
+  const DATA: any = document.getElementById('htmlData');
+  const doc = new jsPDF('p', 'pt', 'letter');
+  const options = {
+    background: 'white',
+    scale: 3
+  };
+  html2canvas(DATA, options).then((canvas) => {
+    const img = canvas.toDataURL('image/PNG');
+
+    // Add image Canvas to PDF
+    const bufferX = 3;
+    const bufferY = 15;
+    const imgProps = (doc as any).getImageProperties(img);
+    const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+    return doc;
+  }).then((docResult) => {
+
+    docResult.output('dataurlnewwindow', { filename: 'comprobante.pdf' });
+    //docResult.save(`${new Date().toISOString()}_HojaDeRuta.pdf`);
+  });
+}
+
+///Descargar
+
+downloadPDF() {
+  const DATA: any = document.getElementById('htmlData');
+  const doc = new jsPDF('p', 'pt', 'letter');
+  const options = {
+    background: 'white',
+    scale: 3
+  };
+  html2canvas(DATA, options).then((canvas) => {
+    const img = canvas.toDataURL('image/PNG');
+
+    // Add image Canvas to PDF
+    const bufferX = 4;
+    const bufferY = 15;
+    const imgProps = (doc as any).getImageProperties(img);
+    const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+    return doc;
+  }).then((docResult) => {
+
+    //docResult.output('dataurlnewwindow', {filename: 'comprobante.pdf'});
+    docResult.save(`${new Date().toISOString()}_GAMB_HojaDeRuta.pdf`);
+  });
+}
+ImprimirHRPDF() {
+  const DATA: any = document.getElementById('htmlData');
+  const doc = new jsPDF('p', 'pt', 'letter');
+  const options = {
+    background: 'white',
+    scale: 3
+  };
+  html2canvas(DATA, options).then((canvas) => {
+    const imgp = canvas.toDataURL('image/PNG');
+
+    // Add image Canvas to PDFx
+    const bufferX = 3;
+    const bufferY = 15;
+    const imgProps = (doc as any).getImageProperties(imgp);
+    const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    doc.addImage(imgp, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+    return doc;
+  }).then((docResult) => {
+
+    docResult.output('dataurlnewwindow', { filename: 'comprobante.pdf' });
+    //docResult.save(`${new Date().toISOString()}_HojaDeRuta.pdf`);
+  });
+}
+
+///Descargar
+
+downloadHRPDF() {
+  const DATA: any = document.getElementById('htmlData');
+  const doc = new jsPDF('p', 'pt', 'letter');
+  const options = {
+    background: 'white',
+    scale: 3
+  };
+  html2canvas(DATA, options).then((canvas) => {
+    const imgp = canvas.toDataURL('image/PNG');
+
+    // Add image Canvas to PDF
+    const bufferX = 4;
+    const bufferY = 15;
+    const imgProps = (doc as any).getImageProperties(imgp);
+    const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    doc.addImage(imgp, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+    return doc;
+  }).then((docResult) => {
+
+    //docResult.output('dataurlnewwindow', {filename: 'comprobante.pdf'});
+    docResult.save(`${new Date().toISOString()}_GAMB_HojaDeRuta.pdf`);
+  });
+}
 }

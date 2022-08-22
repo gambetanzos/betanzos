@@ -1,7 +1,7 @@
 <div *ngIf="mostrarError" class="alert alert-dismissible alert-danger">
   <strong>{{ textError | uppercase  }}</strong>
 </div>
-<div class="container mt-2">
+<div class="container pt-5">
   <div class="row">
     <div class="col-lg-6 offset-lg-3">
       <div class="card">
@@ -17,7 +17,7 @@
                 type="text"
                 formControlName="nuit"
                 class="form-control"
-                placeholder="Numero de Hoja de Ruta"
+                placeholder="Numero de Hoja de Ruta... Ej:... 2222-22"
               />
               <div
                 class="text-danger"

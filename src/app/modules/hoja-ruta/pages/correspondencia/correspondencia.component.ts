@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { identity, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +18,9 @@ import * as moment from 'moment';
   styleUrls: ['./correspondencia.component.css']
 })
 export class CorrespondenciaComponent implements OnInit {
+  seguim: any = [];
+  rutas: any = [];
+  idhr:string="";
   //archivar
   ale:any={};
   alerta:boolean=false
@@ -196,6 +201,7 @@ export class CorrespondenciaComponent implements OnInit {
     }
     this._seguiService.obtenerSegui(id).subscribe(data => {
       this.seguireply = data;
+      console.log(this.seguireply)
       this.nuitreply = this.seguireply.nuit;
       this._seguiService.buscarnuit(this.nuitreply).subscribe(data => {
         this.nuitre = data;
@@ -206,7 +212,7 @@ export class CorrespondenciaComponent implements OnInit {
               this.user=data.serverResponse
               this.nombreus=this.user.username + " " + this.user.surnames
               swal({
-                text: "A cargo de: "+" "+this.nombreus,
+                text: "A cargo de: "+" "+this.nombreus+"................................   "+ "Origen: "+ this.seguireply.origenhr+"....................................         "+ " Referencia: "+ this.seguireply.referencia,
                 title: this.res.destino,
                 buttons: ["Volver", "Recibir"]
               })
@@ -237,7 +243,7 @@ export class CorrespondenciaComponent implements OnInit {
   }
   finalizar(id: any) {
     swal({
-      title: "¿Estás seguro archivar en tu MALETIN???",
+      title: "¿Estás seguro archivar en tu MALETIN?",
       icon: "warning",
       text: "Debe insertar el motivo o detalle del envio a tu maletin...",
       content: {
@@ -275,10 +281,10 @@ export class CorrespondenciaComponent implements OnInit {
         fecharespuesta:this.datito
       }
         swal({
-          title: "¿Estás seguro Reactivar????",
-          text: "Esta seguro de reactivar el trámite?????????",
+          title: "¿Estás seguro Reactivar?",
+          text: "Esta seguro de reactivar el trámite?",
           icon: "warning",
-          buttons: [true, true],
+          buttons: ["Cancelar", "SI"],
           dangerMode: true
         })
           .then((willDelete) => {
@@ -317,10 +323,10 @@ export class CorrespondenciaComponent implements OnInit {
           if (this.res.estado === "ENVIADO" && this.idreply === this.nuitre.length) {
 
             swal({
-              title: "¿Estás seguro volver al anterior ACCION???",
-              text: "Esta seguro eliminar lo que has derivado?????????",
+              title: "¿Estás seguro cancelar?",
+              text: "Esta seguro eliminar lo que has derivado?",
               icon: "warning",
-              buttons: [true, true],
+              buttons: ["Cancelar", "SI"],
               dangerMode: true
             })
               .then((willDelete) => {
@@ -366,5 +372,73 @@ export class CorrespondenciaComponent implements OnInit {
       this.mostrarError = false;
     }, 3000);
   }
+  seguimi(idh: any) {
+      this.loading = true;
+      this.idhr=idh
+      this._hojaService.obtenerHoja(idh).subscribe(data => {
+        this.loading = false;
+        this.rutas = data.serverResponse;
+        this._seguiService.buscarnuit(this.rutas.nuit).subscribe(data => {
+          this.seguim = data;
+        }, error => {
+          console.log(error);
+        })
+      }, error => {
+        console.log(error);
+      })
+  }
 
+  ImprimirPDF() {
+    const DATA: any = document.getElementById('htmlData');
+    const doc = new jsPDF('p', 'pt', 'letter');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas(DATA, options).then((canvas) => {
+      const img = canvas.toDataURL('image/PNG');
+
+      // Add image Canvas to PDF
+      const bufferX = 3;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+
+      docResult.output('dataurlnewwindow', { filename: 'comprobante.pdf' });
+      //docResult.save(`${new Date().toISOString()}_HojaDeRuta.pdf`);
+    });
+  }
+
+  ///Descargar
+
+  downloadPDF() {
+    const DATA: any = document.getElementById('htmlData');
+    const doc = new jsPDF('p', 'pt', 'letter');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas(DATA, options).then((canvas) => {
+      const img = canvas.toDataURL('image/PNG');
+
+      // Add image Canvas to PDF
+      const bufferX = 4;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+
+      //docResult.output('dataurlnewwindow', {filename: 'comprobante.pdf'});
+      docResult.save(`${new Date().toISOString()}_GAMB_HojaDeRuta.pdf`);
+    });
+
+
+  }
 }

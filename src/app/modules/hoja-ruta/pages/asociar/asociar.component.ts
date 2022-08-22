@@ -33,7 +33,7 @@ export class AsociarComponent implements OnInit {
   nuitA: string = "";
   nuitB: any = [];
   hojaForm: FormGroup;
-  titulo = 'ASOCIAR HOJA DE RUTA';
+  titulo = 'ASOCIAR A LA HOJA DE RUTA';
   asociado: Boolean = true
   nuit: string | null;
   public identity: any = [];
