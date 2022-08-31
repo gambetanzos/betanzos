@@ -231,7 +231,6 @@ public orgc: Organizacion[] = [];
         this.asoc = this.segui.asociado;
         this.oficina=this.segui.destino;
         this._userService.obtenerUserpost(this.oficina).subscribe(data =>{
-          let RegExp = /[^()]*/g
           this.users=data.serverResponse;
           console.log(this.users)
           this.nombre=this.users.username+" "+this.users.surnames
@@ -243,6 +242,10 @@ public orgc: Organizacion[] = [];
       }, error => {
         console.log(error);
       })
+    }
+    else{
+      this.nombre=this.identity.username+" "+this.identity.surnames;
+      this.oficina=this.identity.post
     }
   }
   error(valor: string) {

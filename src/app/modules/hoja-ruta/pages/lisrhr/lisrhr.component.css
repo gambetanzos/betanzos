@@ -70,6 +70,11 @@ label{
   .segui{
     background-color: aquamarine;
   }
+  .logo{
+    width: 40px;
+    height: 50px;
+    margin-left: 5px !important;
+  }
 }
 .cardchek{
   width: 30px !important;
