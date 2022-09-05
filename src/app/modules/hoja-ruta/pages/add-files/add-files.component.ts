@@ -62,7 +62,6 @@ export class AddFilesComponent implements OnInit {
     }
     if (this.id !== null) {
       //ediar usuario
-      console.log(HOJA);
       this._hojaService.EditarHoja(this.id, HOJA).subscribe(data => {
         this.router.navigate(['/hoja-ruta/listhr']);
       }, error => {
@@ -96,7 +95,8 @@ export class AddFilesComponent implements OnInit {
   }
 
   fileUpload(data: any) {
-    //this.hoja.urihoja = data.body.image;
-    //console.log(this.hoja.urihoja)
+    console.log(data)
+    this.hoja.urihoja = data.body.image;
+    console.log(this.hoja.urihoja)
   }
 }

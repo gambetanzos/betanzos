@@ -62,9 +62,9 @@
                         <tr>
                           <th scope="col">Derivado A...</th>
                           <th scope="col">Detalle de Instrucion</th>
-                          <th scope="col">Fecha Recepcion</th>
-                          <th scope="col">Tiempo de Resp.</th>
                           <th scope="col">Fecha Derivado</th>
+                          <th scope="col">Tiempo de Resp.</th>
+                          <th scope="col">Fecha Recepción</th>
                           <th scope="col">Estado</th>
 
 
@@ -82,12 +82,8 @@
                             <p *ngIf="seguis.estado === 'MALETIN'" class="badge badge-warning text-dark">{{seguis.smsarchivo}}</p>
                           </td>
                           <td *ngIf="id===seguis.idhj">
-
-                            <i  [ngClass]= "seguis.fecharecepcion === 'SIN RESEPCIONAR' ? 'badge badge-danger' : '' ">
-                              <span *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion}} </span>
-                              <span *ngIf="seguis.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion | amLocale: 'es' | amTimeAgo}} </span><br>
-                              <span *ngIf="seguis.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
-                            </i>
+                            <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocale: 'es' | amTimeAgo}} </span><br>
+                            <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
                           </td>
                           <td *ngIf="id===seguis.idhj">
                             <span *ngIf="seguis.fecharespuesta!=null">{{seguis.fecharespuesta  | amDifference: seguis.fechaderivado :'seconds' : true | amDuration:'seconds'}}</span>
@@ -96,8 +92,12 @@
                             <samp *ngIf="seguis.estado ==='ENVIADO' || seguis.estado ==='RECIBIDO'">Sin Responder</samp>
                           </td>
                           <td *ngIf="id===seguis.idhj">
-                              <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocale: 'es' | amTimeAgo}} </span><br>
-                              <span *ngIf="seguis.fechaderivado != 'SIN RESEPCIONAR'"> {{seguis.fechaderivado | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
+
+                            <i  [ngClass]= "seguis.fecharecepcion === 'SIN RESEPCIONAR' ? 'badge badge-danger' : '' ">
+                              <span *ngIf="seguis.fecharecepcion === 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion}} </span>
+                              <span *ngIf="seguis.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion | amLocale: 'es' | amTimeAgo}} </span><br>
+                              <span *ngIf="seguis.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguis.fecharecepcion | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
+                            </i>
                           </td>
                           <td [ngSwitch]="seguis.estado" *ngIf="id===seguis.idhj">
                             <span *ngSwitchCase="'ENVIADO'" class="badge badge-danger">{{ seguis.estado }}</span>
@@ -129,5 +129,6 @@
     </div>
   </div>
 </div>
+
 
 

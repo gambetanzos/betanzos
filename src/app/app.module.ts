@@ -42,6 +42,7 @@ import { TokenService } from './modules/hoja-ruta/services/token.service';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

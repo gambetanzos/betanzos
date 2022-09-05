@@ -1,0 +1,74 @@
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <span class="titulo">REGISTRAR SLIDER</span>
+          <form
+            class="mt-3"
+            [formGroup]="sliderForm"
+            (ngSubmit)="register()"
+          >
+          <div class="mb-2">
+            <input
+              type="text"
+              formControlName="titulo"
+              class="form-control"
+              placeholder="Titilo"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+              sliderForm.get('titulo')?.hasError('required') &&
+              sliderForm.get('titulo')?.touched
+              "
+            >
+              <span>El Titulo <strong>es obligatorio</strong></span>
+            </div>
+          </div>
+          <div class="mb-2">
+            <input
+              type="text"
+              formControlName="detalle"
+              class="form-control"
+              placeholder="Detalle"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+              sliderForm.get('detalle')?.hasError('required') &&
+              sliderForm.get('detalle')?.touched
+              "
+            >
+              <span>El Detalle <strong>es obligatorio</strong></span>
+            </div>
+          </div>
+            <div>
+              <angular-file-uploader
+                [config]="afuConfig"
+                (ApiResponse)="fileUpload($event)"
+              >
+              </angular-file-uploader>
+            </div>
+
+            <div class="mb-2">
+              <button
+                routerLink="/hoja-ruta/correspondencia"
+                class="btn btn-secondary btn-lg float-start"
+              >
+                VOLVER
+              </button>
+              <button
+                type="submit"
+                [disabled]="sliderForm.invalid"
+                class="btn btn-success btn-lg float-end"
+              >
+                ACEPTAR
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -672,9 +672,9 @@
                       <tr>
                         <th scope="col">Derivado A...</th>
                         <th scope="col">Detalle de Instrucion</th>
-                        <th scope="col">Fecha Recepcion</th>
-                        <th scope="col">Tiempo de Resp.</th>
                         <th scope="col">Fecha Derivado</th>
+                        <th scope="col">Tiempo de Resp.</th>
+                        <th scope="col">Fecha Recepción</th>
                         <th scope="col">Estado</th>
                       </tr>
                     </thead>
@@ -697,44 +697,9 @@
                             {{ seguiss.smsarchivo }}
                           </p>
                         </td>
-                        <td *ngIf="idhr === seguiss.idhj">
-                          <i
-                            [ngClass]="
-                              seguiss.fecharecepcion === 'SIN RESEPCIONAR'
-                                ? 'badge badge-danger'
-                                : ''
-                            "
-                          >
-                            <span
-                              *ngIf="
-                                seguiss.fecharecepcion === 'SIN RESEPCIONAR'
-                              "
-                            >
-                              {{ seguiss.fecharecepcion }}
-                            </span>
-                            <span
-                              *ngIf="
-                                seguiss.fecharecepcion != 'SIN RESEPCIONAR'
-                              "
-                            >
-                              {{
-                                seguiss.fecharecepcion
-                                  | amLocale: "es"
-                                  | amTimeAgo
-                              }} </span
-                            ><br />
-                            <span
-                              *ngIf="
-                                seguiss.fecharecepcion != 'SIN RESEPCIONAR'
-                              "
-                            >
-                              {{
-                                seguiss.fecharecepcion
-                                  | amLocal
-                                  | amDateFormat: "DD-MM-YY HH:mm"
-                              }}
-                            </span>
-                          </i>
+                        <td *ngIf="idhr===seguiss.idhj">
+                          <span *ngIf="seguiss.fechaderivado != 'SIN RESEPCIONAR'"> {{seguiss.fechaderivado | amLocale: 'es' | amTimeAgo}} </span><br>
+                          <span *ngIf="seguiss.fechaderivado != 'SIN RESEPCIONAR'"> {{seguiss.fechaderivado | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
                         </td>
                         <td *ngIf="idhr === seguiss.idhj">
                           <span *ngIf="seguiss.fecharespuesta != null">{{
@@ -781,23 +746,13 @@
                             >Sin Responder</samp
                           >
                         </td>
-                        <td *ngIf="idhr === seguiss.idhj">
-                          <span
-                            *ngIf="seguiss.fechaderivado != 'SIN RESEPCIONAR'"
-                          >
-                            {{
-                              seguiss.fechaderivado | amLocale: "es" | amTimeAgo
-                            }} </span
-                          ><br />
-                          <span
-                            *ngIf="seguiss.fechaderivado != 'SIN RESEPCIONAR'"
-                          >
-                            {{
-                              seguiss.fechaderivado
-                                | amLocal
-                                | amDateFormat: "DD-MM-YY HH:mm"
-                            }}
-                          </span>
+                        <td *ngIf="idhr===seguiss.idhj">
+
+                          <i  [ngClass]= "seguiss.fecharecepcion === 'SIN RESEPCIONAR' ? 'badge badge-danger' : '' ">
+                            <span *ngIf="seguiss.fecharecepcion === 'SIN RESEPCIONAR'"> {{seguiss.fecharecepcion}} </span>
+                            <span *ngIf="seguiss.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguiss.fecharecepcion | amLocale: 'es' | amTimeAgo}} </span><br>
+                            <span *ngIf="seguiss.fecharecepcion != 'SIN RESEPCIONAR'"> {{seguiss.fecharecepcion | amLocal | amDateFormat: 'DD-MM-YY HH:mm'}} </span>
+                          </i>
                         </td>
                         <td
                           [ngSwitch]="seguiss.estado"

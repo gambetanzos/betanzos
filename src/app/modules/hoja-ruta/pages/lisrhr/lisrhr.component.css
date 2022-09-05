@@ -75,6 +75,11 @@ label{
     height: 50px;
     margin-left: 5px !important;
   }
+  .segui{
+    margin-top: 0px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
 }
 .cardchek{
   width: 30px !important;
