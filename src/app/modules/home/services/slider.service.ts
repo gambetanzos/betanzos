@@ -20,4 +20,13 @@ export class SliderService {
   registerSlider(slider: Slider): Observable<any> {
     return this._http.post(this.URL + 'slaider', slider);
   }
+  getSliders(status: string):Observable<any>{
+    return this._http.get(this.URL+'getslider/' + status);
+  }
+  listSlider(id: string):Observable<any>{
+    return this._http.get(this.URL+'slaider/' + id);
+  }
+  EditarSlider(id: string, slider:Slider): Observable<any> {
+    return this._http.put(this.URL + 'slaider/' + id, slider);
+  }
 }

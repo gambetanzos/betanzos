@@ -93,3 +93,6 @@ label{
   font-size: 13px;
 }
 
+.boton{
+  cursor: pointer;
+}

@@ -30,7 +30,7 @@ public identity: any ;
   }
   getUsers(){
     this._usuarioService.getusers().subscribe(data => {
-      this.users = data;
+      this.users = data.serverResponse;
     }, error => {
       console.log(error);
     })

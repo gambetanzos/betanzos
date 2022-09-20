@@ -20,8 +20,9 @@ export class HojarutaService {
     return this._http.post(this.URL + 'hoja', hoja);
   }
 
-  getHojas():Observable<any>{
-    return this._http.get(this.URL+'hoja');
+  getHojas(limit?:number, page?:any):Observable<any>{
+    let dir = `${this.URL}hojas/${limit}/${page}`
+    return this._http.get(dir);
   }
 
   obtenerHoja(id: string): Observable<any> {

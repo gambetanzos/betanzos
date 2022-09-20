@@ -4,49 +4,45 @@
       <div class="card">
         <div class="card-body text-center">
           <span class="titulo">REGISTRAR SLIDER</span>
-          <form
-            class="mt-3"
-            [formGroup]="sliderForm"
-            (ngSubmit)="register()"
-          >
-          <div class="mb-2">
-            <input
-              type="text"
-              formControlName="titulo"
-              class="form-control"
-              placeholder="Titilo"
-            />
-            <div
-              class="text-danger"
-              *ngIf="
-              sliderForm.get('titulo')?.hasError('required') &&
-              sliderForm.get('titulo')?.touched
-              "
-            >
-              <span>El Titulo <strong>es obligatorio</strong></span>
+          <form class="mt-3" [formGroup]="sliderForm" (ngSubmit)="register()">
+            <div class="mb-2">
+              <input
+                type="text"
+                formControlName="titulo"
+                class="form-control"
+                placeholder="Titilo"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  sliderForm.get('titulo')?.hasError('required') &&
+                  sliderForm.get('titulo')?.touched
+                "
+              >
+                <span>El Titulo <strong>es obligatorio</strong></span>
+              </div>
             </div>
-          </div>
-          <div class="mb-2">
-            <input
-              type="text"
-              formControlName="detalle"
-              class="form-control"
-              placeholder="Detalle"
-            />
-            <div
-              class="text-danger"
-              *ngIf="
-              sliderForm.get('detalle')?.hasError('required') &&
-              sliderForm.get('detalle')?.touched
-              "
-            >
-              <span>El Detalle <strong>es obligatorio</strong></span>
+            <div class="mb-2">
+              <input
+                type="text"
+                formControlName="detalle"
+                class="form-control"
+                placeholder="Detalle"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  sliderForm.get('detalle')?.hasError('required') &&
+                  sliderForm.get('detalle')?.touched
+                "
+              >
+                <span>El Detalle <strong>es obligatorio</strong></span>
+              </div>
             </div>
-          </div>
             <div>
               <angular-file-uploader
                 [config]="afuConfig"
-                (ApiResponse)="fileUpload($event)"
+                (ApiResponse)="sliderUpload($event)"
               >
               </angular-file-uploader>
             </div>
@@ -68,6 +64,75 @@
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<section id="configuracion">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Editar Configuración</h4>
+          </div>
+          <div class="card-body">
+            <fieldset class="form-group">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    name="permitirRegistro"
+                    [(ngModel)]="permitirRegistro"
+                    [checked]="permitirRegistro"
+                  />
+                  {{ permitirRegistro ? "Si" : "No" }}
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container mt-5">
+  <div class="row">
+    <div class="card">
+      <div class="card-body text-center">
+        <span class="titulo">LISTADO DE USUARIOS </span>
+        <button
+          class="btn btn-success float-end"
+          routerLink="/hoja-ruta/usuarioAdd"
+        >
+          NUEVO
+        </button>
+        <table class="table table-striped mt-3">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Detalle</th>
+              <th scope="col">ESTADO</th>
+              <th scope="col">Aciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sliders of slider">
+              <td>{{ sliders.titulo }}</td>
+              <td>{{ sliders.detalle }}</td>
+              <td>{{ sliders.estado }}</td>
+              <td >
+               <div>
+                <i (click)="cambiarestado(sliders._id)" class="fas fa-toggle-on" *ngIf="sliders.estado==='true'"></i>
+               </div>
+               <div>
+                <i (click)="cambiarestado(sliders._id)" class="fas fa-toggle-off" *ngIf="sliders.estado==='false'"></i>
+              </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -11,6 +11,7 @@ import { Global } from '../../services/global';
   styleUrls: ['./add-files.component.css']
 })
 export class AddFilesComponent implements OnInit {
+
   public afuConfig: any;
   public hoja: any = [];
   hojaForm: FormGroup;

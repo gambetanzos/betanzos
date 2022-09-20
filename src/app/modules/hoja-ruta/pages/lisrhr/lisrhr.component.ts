@@ -15,7 +15,14 @@ import { SeguimientoService } from '../../services/seguimiento.service';
   styleUrls: ['./lisrhr.component.css']
 })
 export class LisrhrComponent implements OnInit {
-   //modal reguister
+  //paginacion
+  num_pages:any=[];
+  totalpage:any=0;
+  page:number = 1;
+  nextpage:number=0;
+  prevpage:number=0;
+  limit:number=10;
+   //modal reguiste
    canth: string = "";
    totalh: string = "";
    ceros: string = "0";
@@ -82,11 +89,12 @@ export class LisrhrComponent implements OnInit {
     }
     this._hojaService.register(HOJA).subscribe(data => {
       //this.router.navigate(['/hoja-ruta/listhr']);
-      this.hojaForm.reset();
+      this.page=1;
       this.getHojas();
+      this.hojaForm.reset();
     }, error => {
       console.log(error);
-      
+
     })
   }
   getHoja(id: any) {
@@ -94,7 +102,7 @@ export class LisrhrComponent implements OnInit {
     this._hojaService.obtenerHoja(id).subscribe(data => {
       this.loading = false;
       this.hoja = data;
-      this.cant = this.hoja.asociado.length
+      this.cant = this.hoja.asociado.length;
     }, error => {
       this.loading = false;
       console.log(error);
@@ -102,15 +110,46 @@ export class LisrhrComponent implements OnInit {
   }
   getHojas() {
     this.loading = true;
-    this._hojaService.getHojas().subscribe(data => {
-      this.loading = false;
+    this._hojaService.getHojas(this.limit, this.page).subscribe(data => {
       this.hojas = data.serverResponse;
-      this.cant = data.serverResponse.length
+      this.cant = data.totalDocs;
+      this.totalpage=data.totalpage;
+      this.limit=data.limit
     }, error => {
-      this.loading = false;
       console.log(error);
     })
   }
+  paginaAnterior() {
+    this.page--;
+    this.loading = true;
+    this.hojas = [];
+    this.getHojas();
+  }
+
+  paginaPosterior() {
+    this.page++;
+    this.loading = true;
+    this.hojas = [];
+    this.getHojas();
+  }
+  paginaAnteriorClass() {
+
+    if(this.page === 1 || this.page===0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  paginaPosteriorClass() {
+
+    if(this.page === this.totalpage) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   eliminarHoja(id: any) {
     //Alerta
     swal({

@@ -11,9 +11,16 @@ import { Global } from 'src/app/modules/services/global';
   styleUrls: ['./add-slider.component.css']
 })
 export class AddSliderComponent implements OnInit {
+  permitirRegistro:string = "";
+  estado1:string="true";
+  estado2:string="false";
+  slider: any = [];
+  getslider:any=[];
   public afuConfig: any;
   sliderForm: FormGroup;
   img:string="";
+  urislaider:string="";
+  patsslaider:string="";
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -54,14 +61,15 @@ export class AddSliderComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.getSlider()
   }
   register(){
     const SLIDER: Slider = {
       titulo: this.sliderForm.get('titulo')?.value,
       img: this.img,
       detalle: this.sliderForm.get('detalle')?.value,
-      urislaider: this.sliderForm.get('urislaider')?.value,
-      patsslaider: this.sliderForm.get('patsslaider')?.value,
+      urislaider: this.urislaider,
+      patsslaider: this.patsslaider
     }
     this._sliderService.registerSlider(SLIDER).subscribe(data => {
       console.log(data)
@@ -70,10 +78,46 @@ export class AddSliderComponent implements OnInit {
       this.sliderForm.reset();
     })
   }
-  fileUpload(data: any) {
-    //this.hoja.urihoja = data.body.image;
-    console.log(data.body.image)
+  sliderUpload(data: any) {
+    this.img = data.body.serverResponse.img;
+    this.urislaider = data.body.serverResponse.urislaider;
+    this.patsslaider = data.body.serverResponse.patsslaider;
+    console.log(data)
     console.log("ha pasado algo")
-    this.img=data.body.image
+    //this.img=data.body.image
+  }
+  cambiarestado(id:any){
+    const SLIDER1: Slider = {
+      estado: this.estado1,
+    }
+    const SLIDER2: Slider = {
+      estado: this.estado2,
+    }
+    this._sliderService.listSlider(id).subscribe(data=>{
+      this.getslider=data.serverResponse;
+      console.log(data.serverResponse)
+      if(this.getslider.estado=="true"){
+        this._sliderService.EditarSlider(id,SLIDER2).subscribe(data=>{
+          this.getSlider()
+        })
+      }else{
+        this._sliderService.EditarSlider(id,SLIDER1).subscribe(data=>{
+          this.getSlider()
+        })
+      }
+
+    }, error => {
+      console.log(error);
+    })
+
+  }
+  getSlider(){
+    this._sliderService.getSlider().subscribe(data=>{
+      this.slider=data;
+      console.log(data)
+    }, error => {
+      console.log(error);
+    })
   }
 }
+

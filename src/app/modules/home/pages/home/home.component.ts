@@ -10,6 +10,7 @@ import { Global } from 'src/app/modules/services/global';
 export class HomeComponent implements  OnInit {
 
   slider: any = [];
+  getsliders: any = [];
   public url: string;
 
 
@@ -19,7 +20,8 @@ export class HomeComponent implements  OnInit {
     this.url = Global.url;
    }
   ngOnInit(): void {
-    this.getSlider()
+    this.getSlider();
+    this.getSliders()
   }
   getSlider(){
     this._sliderService.getSlider().subscribe(data=>{
@@ -27,7 +29,10 @@ export class HomeComponent implements  OnInit {
       console.log(data)
     })
   }
-
-
-
+  getSliders(){
+    this._sliderService.getSliders("true").subscribe(data=>{
+      this.getsliders=data.serverResponse;
+      console.log(data)
+    })
+  }
 }

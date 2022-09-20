@@ -73,7 +73,6 @@
               *ngFor="
                 let hoja of hojas
                   | filter: filterhoja
-                  | paginate: { itemsPerPage: 10, currentPage: pageActual }
               "
             >
               <td
@@ -232,11 +231,20 @@
             </tr>
           </tbody>
         </table>
-        <pagination-controls
-          *ngIf="hojas.length > 10"
-          (pageChange)="pageActual = $event"
-        ></pagination-controls>
-        <app-spiner *ngIf="loading"></app-spiner>
+      </div>
+      <div *ngIf="cant > 0" class="d-flex justify-content-center mt-2">
+        <ul class="pagination pagination-lg">
+          <li class="page-item mr-2" *ngIf="paginaAnteriorClass()" >
+            <a class="btn btn-info boton"(click)="paginaAnterior()" >&laquo; Anterior</a>
+          </li>
+          <li class="text-center">
+            <b>Pagina: </b> {{page}} <br>
+            <b>De: </b> {{ totalpage }}
+          </li>
+          <li class="page-item ml-2"  *ngIf="paginaPosteriorClass()" >
+            <a class="btn btn-info boton" (click)="paginaPosterior()">Siguiente &raquo;</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

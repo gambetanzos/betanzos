@@ -3,6 +3,7 @@ export interface Slider{
   titulo?: string,
   img?: string,
   detalle?: string,
+  estado?:string,
   urislaider?: string;
   patsslaider?: string;
 }
