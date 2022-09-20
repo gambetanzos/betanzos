@@ -22,8 +22,9 @@ export class SeguimientoService {
   obtenerSegui(id: string): Observable<any> {
     return this._http.get(this.URL + 'segui/' + id);
   }
-  obtenerSeguiO(destino: string): Observable<any> {
-    return this._http.get(this.URL + 'seguiO/' + destino);
+  obtenerSeguiO(destino: string, limit?:number, skip?:number): Observable<any> {
+    let dir = `${this.URL}seguiO/${destino}/${limit}/${skip}`
+    return this._http.get(dir);
   }
   buscarnuit(nuit: string): Observable<any> {
     return this._http.get(this.URL + 'seguias/' + nuit);

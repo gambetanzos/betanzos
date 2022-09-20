@@ -18,6 +18,14 @@ import * as moment from 'moment';
   styleUrls: ['./correspondencia.component.css']
 })
 export class CorrespondenciaComponent implements OnInit {
+  //paginacion
+  totalDocs:any=0;
+  totalpage:any=0;
+  page:number = 1;
+  //skip:number=0;
+  nextpage:number=0;
+  prevpage:number=0;
+  limit:number=500;
   seguim: any = [];
   rutas: any = [];
   idhr:string="";
@@ -106,9 +114,11 @@ export class CorrespondenciaComponent implements OnInit {
     let RegExp = /[^()]*/g
     this.destino = this.identity.post;
     let destino1: any = RegExp.exec(this.destino);
-    this._seguiService.obtenerSeguiO(destino1).subscribe(data => {
+    this._seguiService.obtenerSeguiO(destino1,this.limit,this.page).subscribe(data => {
       this.loading = false;
-      this.segui = data;
+      this.totalDocs=data.length
+      this.segui = data.serverResponse;
+      console.log(data)
     }, error => {
       console.log(error);
     })
@@ -129,7 +139,7 @@ export class CorrespondenciaComponent implements OnInit {
     let destino1: any = RegExp.exec(this.destino);
     this._seguiService.obtenerSeguiO(destino1).subscribe(data => {
       this.loading = false;
-      this.seguis = data;
+      this.seguis = data.serverResponse;
       this.total = this.seguis.length;
       this.cantrec = this.seguis.filter(list => list.estado === 'RECIBIDO').length;
       this.cantder = this.seguis.filter(list => list.estado === 'DERIVADO').length;

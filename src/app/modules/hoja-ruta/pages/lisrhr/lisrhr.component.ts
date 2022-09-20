@@ -16,7 +16,6 @@ import { SeguimientoService } from '../../services/seguimiento.service';
 })
 export class LisrhrComponent implements OnInit {
   //paginacion
-  num_pages:any=[];
   totalpage:any=0;
   page:number = 1;
   nextpage:number=0;
